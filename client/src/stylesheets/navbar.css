@@ -1,0 +1,26 @@
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 1.45rem;
+  padding-bottom: 1.0875rem;
+  width: 100%;
+  background: #333333;
+}
+.navbar-items-left {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+}
+.navbar-items-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 300px;
+}
+
+.navbar-item {
+  color: white;
+  text-decoration: none;
+  margin: 0;
+}
