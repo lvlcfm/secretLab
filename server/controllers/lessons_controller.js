@@ -6,6 +6,7 @@ module.exports = {
   },
   create(req, res, next) {
     const lessonProps = req.body;
+    console.log(lessonProps);
     Lesson.create(lessonProps)
       .then(lesson => res.send(lesson))
       .catch(next);

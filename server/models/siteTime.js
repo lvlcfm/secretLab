@@ -10,6 +10,9 @@ const siteTimeSchema = new Schema({
   },
   endTime: {
     type: Date
+  },
+  siteNumber: {
+    type: Number
   }
 });
 

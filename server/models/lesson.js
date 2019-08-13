@@ -21,7 +21,11 @@ const LessonSchema = new Schema({
   exitTicket: {
     type: String
   },
-  siteTimes: { siteTimeSchema }
+  siteTime: [siteTimeSchema],
+  site_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Site'
+  }
 });
 
 const Lesson = mongoose.model('lesson', LessonSchema);

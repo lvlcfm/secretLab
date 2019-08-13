@@ -17,6 +17,7 @@ module.exports = app => {
 
   //sites
   app.get('/api/sites', SitesController.index);
+  app.get('/api/sites/:id', SitesController.get);
   app.post('/api/sites', SitesController.create);
   app.put('/api/sites/:id', SitesController.edit);
   app.delete('/api/sites/:id', SitesController.delete);

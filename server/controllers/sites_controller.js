@@ -17,6 +17,14 @@ module.exports = {
       })
       .catch(next);
   },
+  get(req, res, next) {
+    const siteId = req.params.id;
+    Site.findById({ _id: siteId })
+      .then(site => {
+        res.send(site);
+      })
+      .catch(next);
+  },
   edit(req, res, next) {
     const siteId = req.params.id;
     const siteProps = req.body;
