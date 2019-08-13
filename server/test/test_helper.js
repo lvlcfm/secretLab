@@ -12,9 +12,9 @@ before(done => {
 });
 
 beforeEach(done => {
-  const { users, sites } = mongoose.connection.collections;
+  const { users, sites, lessons } = mongoose.connection.collections;
   users
     .drop()
-    .then(() => sites.drop().then(() => done()))
+    .then(() => sites.drop().then(() => lessons.drop().then(() => done())))
     .catch(() => done());
 });

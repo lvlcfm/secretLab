@@ -12,7 +12,9 @@ describe('Sites controller', () => {
         .post('/api/sites')
         .send({
           schoolName: 'encinal',
-          siteTimes: [{ day: 'Monday', start: Date.now(), end: Date.now() }]
+          siteTimes: [
+            { day: 'Monday', startTime: Date.now(), endTime: Date.now() }
+          ]
         })
         .end(() => {
           Site.count().then(newCount => {

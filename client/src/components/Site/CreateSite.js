@@ -1,104 +1,115 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWT } from '../../utils/utils';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import SiteTimeList from './SiteTimeList';
 
 class CreateSite extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
-      password: '',
-      emailStatus: '',
-      passwordStatus: '',
-      redirect: false
+      schoolName: '',
+      schoolAddress: '',
+      classroom: '',
+      style: '',
+      level: '',
+      semester: '',
+      year: '',
+      siteContactName: '',
+      siteContactEmail: '',
+      siteTimes: [
+        {
+          startTime: new Date(),
+          endTime: new Date(),
+          day: 'monday',
+          siteNumber: 0
+        },
+        {
+          startTime: new Date(),
+          endTime: new Date(),
+          day: 'tuesday',
+          siteNumber: 1
+        }
+      ],
+      startTime: new Date(),
+      endTime: new Date(),
+      siteNumber: '',
+      day: 'monday'
     };
 
-    this._change = this._change.bind(this);
+    this.change = this.change.bind(this);
 
-    this._submit = this._submit.bind(this);
+    this.submit = this.submit.bind(this);
 
-    this._validateUser = this._validateUser.bind(this);
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
+    this.handleAddSiteTime = this.handleAddSiteTime.bind(this);
+    this.handleDeleteSiteTime = this.handleDeleteSiteTime.bind(this);
   }
 
-  componentDidMount() {
-    if (getJWT() !== null) {
-      this.setState({ redirect: true });
-    }
+  // handle start time
+  handleStartTimeChange(date) {
+    this.setState({
+      endTime: date
+    });
   }
-
-  async _validateUser() {
-    // const userSchema = Yup.object({
-    //   email: Yup.string()
-    //     .email()
-    //     .required('No email provided'),
-    //   password: Yup.string()
-    //     .required('No password provided.')
-    //     .min(10, 'Password should be 8 chars minimum.')
-    //     .matches(/[a-zA-Z0-9]/, 'Password must contain numbers or letters')
-    // });
-    const { email, password } = this.state;
-    try {
-      //   const isValid = await userSchema.validate(
-      //     { email, password },
-      //     { abortEarly: false }
-      //   );
-      //   if (isValid) {
-      //     this.setState({
-      //       emailStatus: '',
-      //       passwordStatus: ''
-      //     });
-      //     return true;
-      //   }
-    } catch (error) {
-      if (error.name === 'ValidationError') {
-        const presentState = { passwordStatus: '', emailStatus: '' };
-        error.inner.map(item => {
-          if (item.path === 'password') {
-            presentState.passwordStatus = item.message;
-          } else if (item.path === 'email') {
-            presentState.emailStatus = item.message;
-          }
-        });
-        this.setState({
-          emailStatus: presentState.emailStatus,
-          passwordStatus: presentState.passwordStatus
-        });
-        return false;
-      }
-    }
-    return false;
+  handleEndTimeChange(date) {
+    this.setState({
+      startTime: date
+    });
+  }
+  handleAddSiteTime() {
+    //something something add to current array
+    this.setState(prevState => ({
+      siteTimes: [
+        {
+          day: this.state.day,
+          startTime: this.state.startTime,
+          endTime: this.state.endTime,
+          siteNumber: parseInt(this.state.siteNumber)
+        },
+        ...prevState.siteTimes
+      ]
+    }));
+  }
+  handleDeleteSiteTime(siteNum) {
+    const newSites = this.state.siteTimes.filter(
+      site => parseInt(site.siteNumber) !== siteNum
+    );
+    this.setState(prevState => ({
+      siteTimes: [...newSites]
+    }));
   }
 
   // takes an event and creates a key,value pair
-  _change(event) {
+  change(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  async _submit(event) {
+  submit(event) {
     event.preventDefault();
-    const isValid = await this._validateUser();
-    if (isValid) {
-      axios
-        .post('http://localhost:5000/api/v1/auth/signup', {
-          name: this.state.name,
-          email: this.state.email,
-          password: this.state.password
-        })
-        .then(res => {
-          // storing token from server
-          localStorage.setItem('anovaToken', res.data.token);
-          this.props.history.push('/');
-        })
-        .catch(err => {
-          localStorage.removeItem('anovaToken');
-          console.log(err);
-        });
-    } else {
-      console.log(this.state.errorMessage);
-    }
+    axios
+      .post('http://localhost:5000/api/sites', {
+        schoolName: this.state.schoolName,
+        schoolAddress: this.state.schoolAddress,
+        classroom: this.state.classroom,
+        style: this.state.style,
+        level: this.state.level,
+        semester: this.state.semester,
+        year: this.state.year,
+        siteContactName: this.state.siteContactName,
+        siteContactEmail: this.state.siteContactEmail,
+        siteTimes: this.state.siteTimes
+      })
+      .then(res => {
+        // storing token from server
+        this.props.history.push('/sites');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -110,63 +121,175 @@ class CreateSite extends Component {
             <div className="anova">CREATE A</div>
             <div className="labs">SITE</div>
           </div>
-          <form onSubmit={this._submit}>
+          <div>
+            <div>RENDER SITE TIMES</div>
+            <SiteTimeList
+              sites={this.state.siteTimes}
+              handleDeleteSiteTime={this.handleDeleteSiteTime}
+            />
             <div>
-              <label htmlFor="email">
-                email
-                <input
-                  id="email"
-                  type="text"
-                  name="email"
-                  onChange={this._change}
-                  value={this.state.email}
+              Site Time
+              <div>
+                Start Time:
+                <DatePicker
+                  selected={this.state.startTime}
+                  onChange={this.handleChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  dateFormat="h:mm aa"
+                  timeCaption="Time"
                 />
-              </label>
-            </div>
-            <div>{this.state.emailStatus}</div>
-            <div>
-              <label htmlFor="password">
-                password
-                <input
-                  id="password"
-                  type="password"
-                  name="password"
-                  onChange={this._change}
-                  value={this.state.password}
+              </div>
+              <div>
+                End Time:
+                <DatePicker
+                  selected={this.state.endTime}
+                  onChange={this.handleChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  dateFormat="h:mm aa"
+                  timeCaption="Time"
                 />
-              </label>
-              <div>{this.state.passwordStatus}</div>
-            </div>
-            <div>
-              <label htmlFor="name">
-                name
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  onChange={this._change}
-                  value={this.state.name}
-                />
-              </label>
+              </div>
             </div>
             <div>
+              CURRENT DAY SELECTED: {this.state.day} NOPE
               <label>
-                {' '}
-                grade
-                <select id="grade" name="grade">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
+                Day
+                <select id="day" name="day" onChange={this.change}>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="saturday">saturday</option>
+                  <option value="sunday">sunday</option>
                 </select>
+              </label>
+            </div>
+            <div>
+              <label htmlFor="siteNumber">
+                Site Number THIS IS THE NUMBER: {this.state.siteNumber}
+                <input
+                  id="siteNumber"
+                  type="text"
+                  name="siteNumber"
+                  onChange={this.change}
+                  value={this.state.siteNumber}
+                />
+              </label>
+            </div>
+            <button onClick={this.handleAddSiteTime}>ADD</button>
+          </div>
+          <form onSubmit={this.submit}>
+            <div>
+              <label htmlFor="schoolName">
+                School Name
+                <input
+                  id="schoolname"
+                  type="text"
+                  name="schoolName"
+                  onChange={this.change}
+                  value={this.state.schoolName}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="schoolAddress">
+                School Address
+                <input
+                  id="schoolAddress"
+                  type="text"
+                  name="schoolAddress"
+                  onChange={this.change}
+                  value={this.state.schoolAddress}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="classroom">
+                Classroom
+                <input
+                  id="classroom"
+                  type="text"
+                  name="classroom"
+                  onChange={this.change}
+                  value={this.state.classroom}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="style">
+                Style
+                <input
+                  id="style"
+                  type="text"
+                  name="style"
+                  onChange={this.change}
+                  value={this.state.style}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="level">
+                Level
+                <input
+                  id="level"
+                  type="text"
+                  name="level"
+                  onChange={this.change}
+                  value={this.state.level}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="semester">
+                Semester
+                <input
+                  id="semester"
+                  type="text"
+                  name="semester"
+                  onChange={this.change}
+                  value={this.state.semester}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="year">
+                Year
+                <input
+                  id="year"
+                  type="text"
+                  name="year"
+                  onChange={this.change}
+                  value={this.state.year}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="siteContactName">
+                Site Contact Name
+                <input
+                  id="siteContactName"
+                  type="text"
+                  name="siteContactName"
+                  onChange={this.change}
+                  value={this.state.siteContactName}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="siteContactEmail">
+                Site Contact Email
+                <input
+                  id="siteContactEmail"
+                  type="text"
+                  name="siteContactEmail"
+                  onChange={this.change}
+                  value={this.state.siteContactEmail}
+                />
               </label>
             </div>
             <input type="submit" value="submit" />

@@ -5,10 +5,10 @@ const siteTimeSchema = new Schema({
   day: {
     type: String
   },
-  start: {
+  startTime: {
     type: Date
   },
-  end: {
+  endTime: {
     type: Date
   }
 });

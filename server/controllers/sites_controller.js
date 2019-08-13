@@ -20,8 +20,6 @@ module.exports = {
   edit(req, res, next) {
     const siteId = req.params.id;
     const siteProps = req.body;
-    console.log(siteId);
-    console.log(siteProps);
     Site.findByIdAndUpdate({ _id: siteId }, siteProps)
       .then(() => Site.findById({ _id: siteId }))
       .then(site => res.send(site))
