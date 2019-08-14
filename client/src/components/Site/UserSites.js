@@ -14,6 +14,7 @@ class Sites extends Component {
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem('anovaUser'));
     console.log(user);
+    console.log('^THIS AS USER?');
     axios
       .post(`http://localhost:5000/api/users/${user._id}`)
       .then(res => {
