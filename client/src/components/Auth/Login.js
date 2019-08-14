@@ -12,7 +12,7 @@ class Signin extends Component {
       .then(res => {
         localStorage.setItem('anovaToken', JSON.stringify(res.data.token));
         localStorage.setItem('anovaUser', JSON.stringify(res.data.user));
-        this.props.history.push('/sites');
+        this.props.history.push('/home');
       })
       .catch(error => {
         console.log(error);
