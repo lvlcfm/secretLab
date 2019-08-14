@@ -20,9 +20,15 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     default: 'GUEST'
-  }
+  },
+  sites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Site'
+    }
+  ]
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

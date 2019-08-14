@@ -5,13 +5,12 @@ const LessonsController = require('../controllers/lessons_controller');
 const RequestsController = require('../controllers/requests_controller');
 
 module.exports = app => {
-  app.get('/api', UsersController.greeting);
-
   //authentication
   app.post('/api/signup', AuthController.signup);
   app.post('/api/login', AuthController.login);
 
   //users
+  app.post('/api/users/:id', UsersController.getUserById);
   app.post('/api/users', UsersController.create);
   app.put('/api/users/:id', UsersController.edit);
   app.delete('/api/users/:id', UsersController.delete);

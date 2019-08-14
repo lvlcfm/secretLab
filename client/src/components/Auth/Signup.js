@@ -11,11 +11,12 @@ class Signup extends Component {
       .post('http://localhost:5000/api/signup', response.profileObj)
       .then(res => {
         console.log(res.data);
-        localStorage.setItem('anovaToken', res.data.token);
-        localStorage.setItem('anovaUser', res.data.user);
+
+        localStorage.setItem('anovaToken', JSON.stringify(res.data.token));
+        localStorage.setItem('anovaUser', JSON.stringify(res.data.user));
         console.log('WE SUCCEEDED');
         console.log(this.props);
-        this.props.history.push('/sites');
+        this.props.history.push('/home');
       })
       .catch(error => {
         console.log(error);

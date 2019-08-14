@@ -6,30 +6,27 @@ import '../../stylesheets/navbar.css';
 
 class Navbar extends Component {
   render() {
-    const anovaToken = getJWT();
-    const anovaUser = getUser();
-    console.log(anovaToken);
-    console.log(anovaUser);
-    console.log("this is when we haven't been logged on");
-    if (anovaToken === null && anovaToken === null) {
+    const anovaToken = localStorage.getItem('anovaToken');
+    const anovaUser = localStorage.getItem('anovaUser');
+    if (anovaToken === null && anovaUser === null) {
       return <div></div>;
     } else {
       return (
         <div className="navbar-container">
           <div className="navbar-items-left">
-            <Link className="navbar-item" to="/">
+            <Link className="navbar-item" to="/sites">
               LOGO
             </Link>
           </div>
           <div className="navbar-items-right">
-            <Link className="navbar-item" to="/">
+            <Link className="navbar-item" to="/home">
               home
             </Link>
             <Link className="navbar-item" to="/sites">
               sites
             </Link>
-            <Link className="navbar-item" to="/sites">
-              my sites
+            <Link className="navbar-item" to="/dashboard">
+              dashboard
             </Link>
             <Logout />
           </div>

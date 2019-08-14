@@ -11,6 +11,7 @@ class Sites extends Component {
     };
     this.handleDeleteSite = this.handleDeleteSite.bind(this);
     this.handleSiteView = this.handleSiteView.bind(this);
+    this.handleJoinSite = this.handleJoinSite.bind(this);
   }
   componentDidMount() {
     axios
@@ -45,6 +46,22 @@ class Sites extends Component {
         console.log(err);
       });
   }
+  handleJoinSite(siteId, userId) {
+    axios
+      .post('http://localhost:5000/api/requests', {
+        requester: userId,
+        requestType: 'SITE',
+        site_id: siteId
+      })
+      .then(res => {
+        // go back to sites
+        this.props.history.push('/sites');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -53,6 +70,7 @@ class Sites extends Component {
           sites={this.state.sites}
           handleDeleteSite={this.handleDeleteSite}
           handleSiteView={this.handleSiteView}
+          handleJoinSite={this.handleJoinSite}
         />
         <Link to="/createsite">Create Site</Link>
       </div>

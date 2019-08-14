@@ -22,14 +22,13 @@ const RequestSchema = new Schema({
   },
   roleRequest: {
     type: String,
-    enum: ['GUEST', 'MENTEE', 'MENTOR', 'SITE_LEADER', 'EXEC'],
-    default: 'GUEST'
+    enum: ['GUEST', 'MENTEE', 'MENTOR', 'SITE_LEADER', 'EXEC']
   },
   site_id: {
     type: Schema.Types.ObjectId,
     ref: 'Site'
   }
 });
-const Request = mongoose.model('request', RequestSchema);
+const Request = mongoose.model('Request', RequestSchema);
 
 module.exports = Request;

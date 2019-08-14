@@ -28,6 +28,6 @@ const LessonSchema = new Schema({
   }
 });
 
-const Lesson = mongoose.model('lesson', LessonSchema);
+const Lesson = mongoose.model('Lesson', LessonSchema);
 
 module.exports = Lesson;

@@ -1,14 +1,24 @@
 const User = require('../models/user');
 
 module.exports = {
-  greeting(req, res) {
-    res.send({ hi: 'there' });
-  },
   create(req, res, next) {
     const userProps = req.body;
 
     User.create(userProps)
       .then(user => res.send(user))
+      .catch(next);
+  },
+  getUserById(req, res, next) {
+    const userId = req.params.id;
+    User.findById({ _id: userId })
+      .populate({
+        path: 'sites',
+        model: 'Site'
+      })
+      .then(retUser => {
+        console.log(retUser);
+        res.send(retUser);
+      })
       .catch(next);
   },
   edit(req, res, next) {

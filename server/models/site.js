@@ -34,6 +34,6 @@ const SiteSchema = new Schema({
   siteTimes: [siteTimeSchema]
 });
 
-const Site = mongoose.model('site', SiteSchema);
+const Site = mongoose.model('Site', SiteSchema);
 
 module.exports = Site;

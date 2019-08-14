@@ -10,8 +10,8 @@ class Signin extends Component {
     axios
       .post('http://localhost:5000/api/login', response.profileObj)
       .then(res => {
-        localStorage.setItem('anovaToken', res.data.token);
-        localStorage.setItem('anovaUser', res.data.user);
+        localStorage.setItem('anovaToken', JSON.stringify(res.data.token));
+        localStorage.setItem('anovaUser', JSON.stringify(res.data.user));
         this.props.history.push('/sites');
       })
       .catch(error => {
