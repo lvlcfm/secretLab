@@ -1,7 +1,7 @@
 import React from 'react';
-import { getUser } from '../../utils/utils';
 
 const SitesList = props => {
+  const user = JSON.parse(localStorage.getItem('anovaUser'));
   //const user = getUser();
   const siteTimes = props.sites.map(site => {
     console.log(site);
@@ -14,7 +14,7 @@ const SitesList = props => {
         <button onClick={() => props.handleSiteView(site._id)}>
           TAKE ME TO THE
         </button>
-        <button onClick={() => props.handleJoinSite(site._id, site._id)}>
+        <button onClick={() => props.handleJoinSite(site._id, user._id)}>
           JOIN SITE
         </button>
       </div>
