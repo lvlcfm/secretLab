@@ -1,9 +1,6 @@
 const Site = require('../models/site');
 
 module.exports = {
-  greeting(req, res) {
-    res.send({ hi: 'there' });
-  },
   create(req, res, next) {
     const siteProps = req.body;
     Site.create(siteProps)
