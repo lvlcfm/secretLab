@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { removeJWT, removeUser } from '../../utils/utils';
+import styled from 'styled-components';
+
+const Logout = styled.div`
+  color: white;
+`;
 
 class LogOut extends Component {
   constructor(props) {
@@ -15,11 +20,7 @@ class LogOut extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <button onClick={this._logOut}>Logout</button>
-      </div>
-    );
+    return <Logout onClick={this._logOut}>Logout</Logout>;
   }
 }
 export default withRouter(LogOut);
