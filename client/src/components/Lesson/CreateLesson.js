@@ -101,11 +101,11 @@ class CreateSite extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="signUpBox">
-          <div className="title">
-            <div className="anova">CREATE A</div>
-            <div className="labs">LESSON</div>
+      <div>
+        <div>
+          <div>
+            <div>CREATE A</div>
+            <div>LESSON</div>
           </div>
           <form onSubmit={this.submit}>
             <div>

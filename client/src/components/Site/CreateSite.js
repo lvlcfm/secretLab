@@ -114,12 +114,11 @@ class CreateSite extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="signUpBox">
-          <img src="../public/img/logo-lower.png" className="logo" />
-          <div className="title">
-            <div className="anova">CREATE A</div>
-            <div className="labs">SITE</div>
+      <div>
+        <div>
+          <div>
+            <div>CREATE A</div>
+            <div>SITE</div>
           </div>
           <div>
             <div>RENDER SITE TIMES</div>

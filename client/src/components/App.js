@@ -11,11 +11,10 @@ import CreateLesson from './Lesson/CreateLesson';
 import Lesson from './Lesson/Lesson';
 import Dashboard from './Dashboard/Dashboard';
 import Requests from './Request/Requests';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <NavBar />
         <Switch>
