@@ -76,6 +76,16 @@ class Navbar extends Component {
             >
               dashboard
             </Link>
+            <Link
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                margin: 0
+              }}
+              to="/profile"
+            >
+              profile
+            </Link>
             <Logout />
           </NavbarItemsRight>
         </NavbarContainer>

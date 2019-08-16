@@ -11,6 +11,7 @@ import CreateLesson from './Lesson/CreateLesson';
 import Lesson from './Lesson/Lesson';
 import Dashboard from './Dashboard/Dashboard';
 import Requests from './Request/Requests';
+import Profile from './User/Profile';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/lessons/:id" component={Lesson} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/dashboard/requests" component={Requests} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </BrowserRouter>
     </div>

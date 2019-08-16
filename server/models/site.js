@@ -29,7 +29,8 @@ const SiteSchema = new Schema({
   },
   siteContactEmail: {
     type: String
-  }
+  },
+  siteTimes: [{ type: Schema.Types.ObjectId, ref: 'SiteTime' }]
 });
 
 const Site = mongoose.model('Site', SiteSchema);

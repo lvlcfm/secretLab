@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import SitesList from './SitesList';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 
 class Sites extends Component {
   constructor(props) {
@@ -65,14 +73,24 @@ class Sites extends Component {
   render() {
     return (
       <div>
-        SITES
-        <SitesList
-          sites={this.state.sites}
-          handleDeleteSite={this.handleDeleteSite}
-          handleSiteView={this.handleSiteView}
-          handleJoinSite={this.handleJoinSite}
-        />
-        <Link to="/createsite">Create Site</Link>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: '100px'
+          }}
+        >
+          <Link to="/createsite">Create Site</Link>
+        </div>
+        <Container>
+          <SitesList
+            sites={this.state.sites}
+            handleDeleteSite={this.handleDeleteSite}
+            handleSiteView={this.handleSiteView}
+            handleJoinSite={this.handleJoinSite}
+          />
+        </Container>
       </div>
     );
   }

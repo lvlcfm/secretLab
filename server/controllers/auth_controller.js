@@ -12,6 +12,10 @@ module.exports = {
         path: 'sites',
         model: 'Site'
       })
+      .populate({
+        path: 'siteTimes',
+        model: 'SiteTime'
+      })
       .then(retUser => {
         if (retUser) {
           jwt.sign(

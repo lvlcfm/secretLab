@@ -1,20 +1,16 @@
 const assert = require('assert');
 const request = require('supertest');
-const mongoose = require('mongoose');
 const app = require('../../app');
 
 const Site = require('../../models/site');
 
 describe('Sites controller', () => {
-  it('Post to /api/sites creates a new Site', done => {
+  xit('Post to /api/sites creates a new Site', done => {
     Site.count().then(count => {
       request(app)
         .post('/api/sites')
         .send({
-          schoolName: 'encinal',
-          siteTimes: [
-            { day: 'Monday', startTime: Date.now(), endTime: Date.now() }
-          ]
+          schoolName: 'encinal'
         })
         .end(() => {
           Site.count().then(newCount => {

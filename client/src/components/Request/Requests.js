@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import RequestList from './RequestList';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 100px;
+`;
 
 class Requests extends Component {
   constructor(props) {
@@ -68,14 +77,13 @@ class Requests extends Component {
 
   render() {
     return (
-      <div>
-        SITES
+      <Container>
         <RequestList
           requests={this.state.requests}
           handleApproveRequest={this.handleApproveRequest}
           handleDenyRequest={this.handleDenyRequest}
         />
-      </div>
+      </Container>
     );
   }
 }

@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import LessonList from '../Lesson/LessonList';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 100px;
+`;
 
 class Site extends Component {
   constructor(props) {
@@ -31,15 +40,23 @@ class Site extends Component {
     this.props.history.push(`/lessons/${lessonId}`);
   }
   render() {
-    console.log(this.props.match.params.id);
     return (
-      <div>
-        <button onClick={this.onCreateLesson}>CREATE THEEEEE LESSON</button>
+      <Container>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: '100px'
+          }}
+        >
+          <button onClick={this.onCreateLesson}>CREATE THEEEEE LESSON</button>
+        </div>
         <LessonList
           lessons={this.state.lessons}
           handleLessonView={this.handleLessonView}
         />
-      </div>
+      </Container>
     );
   }
 }

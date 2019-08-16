@@ -1,8 +1,39 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SiteTimeList from './SiteTimeList';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+`;
+const ItemsContainer = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
+const AddSiteContainer = styled.div`
+  border-left: solid #333 5px;
+  margin-right: 24px;
+  margin-top: 50px;
+  padding-left: 10px;
+`;
+
+const SchoolInfoContainer = styled.form`
+  border-left: solid #333 5px;
+  margin-right: 24px;
+  margin-top: 50px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+`;
 
 class CreateSite extends Component {
   constructor(props) {
@@ -17,20 +48,7 @@ class CreateSite extends Component {
       year: '',
       siteContactName: '',
       siteContactEmail: '',
-      siteTimes: [
-        {
-          startTime: new Date(),
-          endTime: new Date(),
-          day: 'monday',
-          siteNumber: 0
-        },
-        {
-          startTime: new Date(),
-          endTime: new Date(),
-          day: 'tuesday',
-          siteNumber: 1
-        }
-      ],
+      siteTimes: [],
       startTime: new Date(),
       endTime: new Date(),
       siteNumber: '',
@@ -50,12 +68,12 @@ class CreateSite extends Component {
   // handle start time
   handleStartTimeChange(date) {
     this.setState({
-      endTime: date
+      startTime: date
     });
   }
   handleEndTimeChange(date) {
     this.setState({
-      startTime: date
+      endTime: date
     });
   }
   handleAddSiteTime() {
@@ -92,16 +110,18 @@ class CreateSite extends Component {
     event.preventDefault();
     axios
       .post('http://localhost:5000/api/sites', {
-        schoolName: this.state.schoolName,
-        schoolAddress: this.state.schoolAddress,
-        classroom: this.state.classroom,
-        style: this.state.style,
-        level: this.state.level,
-        semester: this.state.semester,
-        year: this.state.year,
-        siteContactName: this.state.siteContactName,
-        siteContactEmail: this.state.siteContactEmail,
-        siteTimes: this.state.siteTimes
+        siteProps: {
+          schoolName: this.state.schoolName,
+          schoolAddress: this.state.schoolAddress,
+          classroom: this.state.classroom,
+          style: this.state.style,
+          level: this.state.level,
+          semester: this.state.semester,
+          year: this.state.year,
+          siteContactName: this.state.siteContactName,
+          siteContactEmail: this.state.siteContactEmail
+        },
+        siteTimeProps: this.state.siteTimes
       })
       .then(res => {
         // storing token from server
@@ -114,25 +134,24 @@ class CreateSite extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <Container>
+        <div>CREATE A SITE</div>
+        <ItemsContainer>
           <div>
-            <div>CREATE A</div>
-            <div>SITE</div>
+            <div>SITE TIME SLOTS</div>
           </div>
-          <div>
-            <div>RENDER SITE TIMES</div>
-            <SiteTimeList
-              sites={this.state.siteTimes}
-              handleDeleteSiteTime={this.handleDeleteSiteTime}
-            />
+          <SiteTimeList
+            sites={this.state.siteTimes}
+            handleDeleteSiteTime={this.handleDeleteSiteTime}
+          />
+          <AddSiteContainer>
             <div>
-              Site Time
+              ADD A TIME SLOT
               <div>
                 Start Time:
                 <DatePicker
                   selected={this.state.startTime}
-                  onChange={this.handleChange}
+                  onChange={this.handleStartTimeChange}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={15}
@@ -144,7 +163,7 @@ class CreateSite extends Component {
                 End Time:
                 <DatePicker
                   selected={this.state.endTime}
-                  onChange={this.handleChange}
+                  onChange={this.handleEndTimeChange}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={15}
@@ -154,7 +173,6 @@ class CreateSite extends Component {
               </div>
             </div>
             <div>
-              CURRENT DAY SELECTED: {this.state.day} NOPE
               <label>
                 Day
                 <select id="day" name="day" onChange={this.change}>
@@ -170,7 +188,7 @@ class CreateSite extends Component {
             </div>
             <div>
               <label htmlFor="siteNumber">
-                Site Number THIS IS THE NUMBER: {this.state.siteNumber}
+                Site Number
                 <input
                   id="siteNumber"
                   type="text"
@@ -180,9 +198,9 @@ class CreateSite extends Component {
                 />
               </label>
             </div>
-            <button onClick={this.handleAddSiteTime}>ADD</button>
-          </div>
-          <form onSubmit={this.submit}>
+            <button onClick={this.handleAddSiteTime}>ADD TIME SLOT</button>
+          </AddSiteContainer>
+          <SchoolInfoContainer onSubmit={this.submit}>
             <div>
               <label htmlFor="schoolName">
                 School Name
@@ -291,10 +309,11 @@ class CreateSite extends Component {
                 />
               </label>
             </div>
-            <input type="submit" value="submit" />
-          </form>
-        </div>
-      </div>
+
+            <input type="submit" value="CREATE SITE" />
+          </SchoolInfoContainer>
+        </ItemsContainer>
+      </Container>
     );
   }
 }

@@ -1,20 +1,37 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 100px;
+`;
+
+const SiteItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  width: 200px;
+  border: solid #333 3px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0px #333;
+`;
 
 const UserSitesList = props => {
   const siteTimes = props.userSites.map(site => {
-    console.log(site);
     return (
-      <div key={site._id}>
+      <SiteItem>
         <h1>{site.schoolName}</h1>
         <div>this is a site</div>
         <div>this is a site</div>
         <button onClick={() => props.handleSiteView(site._id)}>
-          TAKE ME TO THE
+          VIEW SITE
         </button>
-      </div>
+      </SiteItem>
     );
   });
-  return <div>SiteTimes{siteTimes}</div>;
+  return <ListContainer>{siteTimes}</ListContainer>;
 };
 
 export default UserSitesList;

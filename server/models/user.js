@@ -26,6 +26,12 @@ const UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Site'
     }
+  ],
+  siteTimes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'SiteTime'
+    }
   ]
 });
 

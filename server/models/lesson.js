@@ -23,6 +23,10 @@ const LessonSchema = new Schema({
   site_id: {
     type: Schema.Types.ObjectId,
     ref: 'Site'
+  },
+  siteTime_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'SiteTime'
   }
 });
 

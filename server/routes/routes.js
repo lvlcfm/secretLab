@@ -1,6 +1,7 @@
 const AuthController = require('../controllers/auth_controller');
 const UsersController = require('../controllers/users_controller');
 const SitesController = require('../controllers/sites_controller');
+const SiteTimesController = require('../controllers/siteTime_controller');
 const LessonsController = require('../controllers/lessons_controller');
 const RequestsController = require('../controllers/requests_controller');
 
@@ -22,6 +23,11 @@ module.exports = app => {
   app.post('/api/sites', SitesController.create);
   app.put('/api/sites/:id', SitesController.edit);
   app.delete('/api/sites/:id', SitesController.delete);
+
+  //sitesTimesj
+  app.post('/api/sitetimes', SiteTimesController.create);
+  app.put('/api/sitetimes/:id', SiteTimesController.edit);
+  app.delete('/api/sitetimes/:id', SiteTimesController.create);
 
   //lessons
   app.get('/api/lessons', LessonsController.index);

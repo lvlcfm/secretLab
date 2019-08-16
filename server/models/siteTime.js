@@ -13,6 +13,10 @@ const siteTimeSchema = new Schema({
   },
   siteNumber: {
     type: Number
+  },
+  site_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Site'
   }
 });
 

@@ -1,9 +1,26 @@
 const Site = require('../models/site');
+const SiteTime = require('../models/siteTime');
 
 module.exports = {
-  create(req, res, next) {
-    const siteProps = req.body;
-    Site.create(siteProps)
+  async create(req, res, next) {
+    const siteProps = req.body.siteProps;
+    const siteTimeProps = req.body.siteTimeProps;
+    const newSite = new Site(siteProps);
+    console.log(req.body);
+    console.log(req.body.siteTimeProps);
+    console.log('that was siteTimeProps');
+    console.log(req.body.siteProps);
+    console.log('that was siteProps');
+    await newSite.save();
+    var SITE_TIMES = [];
+    for (let index = 0; index < siteTimeProps.length; index++) {
+      const siteTimePropsItem = siteTimeProps[index];
+      const siteTimeItem = new SiteTime(siteTimePropsItem);
+      siteTimeItem.site_id = newSite._id;
+      await siteTimeItem.save();
+      SITE_TIMES.push(siteTimeItem._id);
+    }
+    Site.findByIdAndUpdate({ _id: newSite._id }, { siteTimes: SITE_TIMES })
       .then(site => res.send(site))
       .catch(next);
   },

@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
+const LessonContainer = styled.form`
+  border-left: solid #333 5px;
+  margin-right: 24px;
+  margin-top: 50px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+`;
 
 class CreateSite extends Component {
   constructor(props) {
@@ -72,11 +89,6 @@ class CreateSite extends Component {
   }
   submit(event) {
     event.preventDefault();
-    console.log('LETS SEND THIS');
-    console.log(this.state.day);
-    console.log(this.state.startTime);
-    console.log(this.state.endTime);
-    console.log(this.state.siteNumber);
     axios
       .post('http://localhost:5000/api/lessons', {
         title: this.state.title,
@@ -101,13 +113,12 @@ class CreateSite extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <div>
           <div>
-            <div>CREATE A</div>
-            <div>LESSON</div>
+            <div>CREATE A LESSON</div>
           </div>
-          <form onSubmit={this.submit}>
+          <LessonContainer onSubmit={this.submit}>
             <div>
               <label htmlFor="title">
                 Lesson Title
@@ -121,9 +132,8 @@ class CreateSite extends Component {
               </label>
             </div>
             <div>
-              current day selected
               <label>
-                Day
+                Site Time
                 <select
                   id="siteTime"
                   name="siteTime"
@@ -140,9 +150,9 @@ class CreateSite extends Component {
               </label>
             </div>
             <input type="submit" value="submit" />
-          </form>
+          </LessonContainer>
         </div>
-      </div>
+      </Container>
     );
   }
 }
