@@ -3,7 +3,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
 
-const Site = mongoose.model('site');
+const Site = require('../../models/site');
 
 describe('Sites controller', () => {
   it('Post to /api/sites creates a new Site', done => {

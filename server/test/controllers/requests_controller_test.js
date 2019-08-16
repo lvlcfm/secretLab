@@ -3,7 +3,8 @@ const assert = require('assert');
 const mongoose = require('mongoose');
 const app = require('../../app');
 
-const Request = mongoose.model('request');
+const Request = require('../../models/request');
+
 describe('Requests controller', () => {
   it('Post to /api/requests creates a new Request', done => {
     Request.count().then(count => {
@@ -20,14 +21,17 @@ describe('Requests controller', () => {
         });
     });
   });
-  it('PUT to /api/requests/id edits an existing Request', done => {
+  xit('PUT to /api/requests/id edits an existing Request', done => {
     const newRequest = new Request({
       requestType: 'SITE'
     });
     newRequest.save().then(() => {
       request(app)
         .put(`/api/requests/${newRequest._id}`)
-        .send({ requestType: 'ROLE' })
+        .send({
+          requestProps: { status: 'APPROVED' },
+          requestType: 'ROLE'
+        })
         .end(() => {
           Request.findOne({ requestType: 'ROLE' }).then(updateRequest => {
             assert(updateRequest.requestType === 'ROLE');

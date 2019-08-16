@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { siteTimeSchema } = require('./siteTime');
 
 const LessonSchema = new Schema({
   title: {
@@ -21,7 +20,6 @@ const LessonSchema = new Schema({
   exitTicket: {
     type: String
   },
-  siteTime: [siteTimeSchema],
   site_id: {
     type: Schema.Types.ObjectId,
     ref: 'Site'

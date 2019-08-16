@@ -6,6 +6,7 @@ const RequestsController = require('../controllers/requests_controller');
 
 module.exports = app => {
   //authentication
+  app.get('/api', AuthController.greeting);
   app.post('/api/signup', AuthController.signup);
   app.post('/api/login', AuthController.login);
 

@@ -3,7 +3,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
 
-const Lesson = mongoose.model('lesson');
+const Lesson = require('../../models/lesson');
 
 describe('Lessons controller', () => {
   it('Post to /api/Lessons creates a new Lesson', done => {

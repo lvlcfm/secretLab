@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { siteTimeSchema } = require('./siteTime');
 
 const SiteSchema = new Schema({
   schoolName: {
@@ -30,8 +29,7 @@ const SiteSchema = new Schema({
   },
   siteContactEmail: {
     type: String
-  },
-  siteTimes: [siteTimeSchema]
+  }
 });
 
 const Site = mongoose.model('Site', SiteSchema);

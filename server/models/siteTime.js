@@ -16,4 +16,6 @@ const siteTimeSchema = new Schema({
   }
 });
 
-module.exports.siteTimeSchema = siteTimeSchema;
+const SiteTime = mongoose.model('SiteTime', siteTimeSchema);
+
+module.exports = SiteTime;

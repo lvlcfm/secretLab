@@ -3,7 +3,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
 
-const User = mongoose.model('user');
+const User = require('../../models/user');
 
 describe('Users controller', () => {
   it('Post to /api/users creates a new user', done => {
