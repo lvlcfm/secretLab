@@ -17,7 +17,8 @@ beforeEach(done => {
     sites,
     lessons,
     requests,
-    sitetimes
+    sitetimes,
+    rosters
   } = mongoose.connection.collections;
   users
     .drop()
@@ -28,7 +29,11 @@ beforeEach(done => {
           lessons
             .drop()
             .then(() =>
-              requests.drop().then(() => sitetimes.drop().then(() => done()))
+              requests
+                .drop()
+                .then(() =>
+                  sitetimes.drop().then(() => rosters.drop().then(() => done()))
+                )
             )
         )
     )

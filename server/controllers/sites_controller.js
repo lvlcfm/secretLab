@@ -6,11 +6,6 @@ module.exports = {
     const siteProps = req.body.siteProps;
     const siteTimeProps = req.body.siteTimeProps;
     const newSite = new Site(siteProps);
-    console.log(req.body);
-    console.log(req.body.siteTimeProps);
-    console.log('that was siteTimeProps');
-    console.log(req.body.siteProps);
-    console.log('that was siteProps');
     await newSite.save();
     var SITE_TIMES = [];
     for (let index = 0; index < siteTimeProps.length; index++) {
@@ -34,6 +29,7 @@ module.exports = {
   get(req, res, next) {
     const siteId = req.params.id;
     Site.findById({ _id: siteId })
+      .populate({ path: 'siteTimes', model: 'SiteTime' })
       .then(site => {
         res.send(site);
       })

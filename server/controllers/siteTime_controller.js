@@ -1,6 +1,12 @@
 const SiteTime = require('../models/siteTime');
 
 module.exports = {
+  getSiteTimes(req, res, next) {
+    const siteId = req.params.id;
+    SiteTime.find({ site_id: siteId })
+      .then(siteTimes => res.send(siteTimes))
+      .catch(next);
+  },
   create(req, res, next) {
     const siteTimeProps = req.body;
     SiteTime.create(siteTimeProps)

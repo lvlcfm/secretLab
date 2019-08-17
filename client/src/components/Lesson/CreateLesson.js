@@ -19,7 +19,7 @@ const LessonContainer = styled.form`
   margin-bottom: 20px;
 `;
 
-class CreateSite extends Component {
+class CreateLesson extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +37,8 @@ class CreateSite extends Component {
       day: '',
       startTime: '',
       endTime: '',
-      siteNumber: ''
+      siteNumber: '',
+      siteTimeId: ''
     };
 
     this.change = this.change.bind(this);
@@ -51,6 +52,7 @@ class CreateSite extends Component {
       .get(`http://localhost:5000/api/sites/${this.props.match.params.id}`)
       .then(res => {
         // storing token from server
+        console.log(res.data);
         this.setState({
           siteObj: res.data,
           site_id: res.data._id,
@@ -58,6 +60,7 @@ class CreateSite extends Component {
           startTime: res.data.siteTimes[0].startTime,
           endTime: res.data.siteTimes[0].endTime,
           siteNumber: res.data.siteTimes[0].siteNumber,
+          siteTimeId: res.data.siteTimes[0]._id,
           siteTimes: res.data.siteTimes
         });
       })
@@ -74,17 +77,20 @@ class CreateSite extends Component {
   }
   handleSiteTimeChange(event) {
     console.log(event.target.value);
+    console.log('OH OKAY?');
     const newTimeList = this.state.siteTimes.filter(
       site => parseInt(site.siteNumber) === parseInt(event.target.value)
     );
     const newTime = newTimeList[0];
     console.log(newTime);
     console.log('???');
+    console.log('HMM????');
     this.setState({
       day: newTime.day,
       startTime: newTime.startTime,
       endTime: newTime.endTime,
-      siteNumber: newTime.siteNumber
+      siteNumber: newTime.siteNumber,
+      siteTimeId: newTime._id
     });
   }
   submit(event) {
@@ -92,15 +98,7 @@ class CreateSite extends Component {
     axios
       .post('http://localhost:5000/api/lessons', {
         title: this.state.title,
-        site_id: this.state.site_id,
-        siteTime: [
-          {
-            day: this.state.day,
-            startTime: this.state.startTime,
-            endTime: this.state.endTime,
-            siteNumber: this.state.siteNumber
-          }
-        ]
+        site_id: this.state.site_id
       })
       .then(res => {
         // storing token from server
@@ -116,7 +114,7 @@ class CreateSite extends Component {
       <Container>
         <div>
           <div>
-            <div>CREATE A LESSON</div>
+            <div>CREATE A LESSON ????</div>
           </div>
           <LessonContainer onSubmit={this.submit}>
             <div>
@@ -156,4 +154,4 @@ class CreateSite extends Component {
     );
   }
 }
-export default CreateSite;
+export default CreateLesson;

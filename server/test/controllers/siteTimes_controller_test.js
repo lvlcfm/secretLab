@@ -52,7 +52,6 @@ describe('SiteTimes controller', () => {
             SiteTime.findOne({ _id: newSiteTime._id })
               .populate({ path: 'site_id', ref: 'Site' })
               .then(updateSiteTime => {
-                console.log(updateSiteTime);
                 assert(updateSiteTime.day === 'Tuesday');
                 done();
               });

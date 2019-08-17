@@ -21,7 +21,6 @@ module.exports = {
   },
   create(req, res, next) {
     const requestProps = req.body;
-    console.log(requestProps);
     Request.create(requestProps)
       .then(request => res.send(request))
       .catch(next);
@@ -30,19 +29,16 @@ module.exports = {
     const requestId = req.params.id;
     const requestProps = req.body.requestProps;
     const requestType = req.body.requestType;
-    console.log(req.body.requestType);
     if (requestType === 'SITE') {
       if (requestProps.status === 'APPROVED') {
         Request.findByIdAndUpdate({ _id: requestId }, requestProps)
           .then(() => Request.findById({ _id: requestId }))
           .then(retRequest => {
-            console.log(retRequest);
             User.findByIdAndUpdate(
               { _id: retRequest.requester },
               { $push: { sites: retRequest.site_id } }
             )
               .then(retUser => {
-                console.log(retUser);
                 res.send(retRequest);
               })
               .catch(next);

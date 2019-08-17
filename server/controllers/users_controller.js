@@ -8,6 +8,28 @@ module.exports = {
       .then(user => res.send(user))
       .catch(next);
   },
+  joinSiteTime(req, res, next) {
+    const siteTimeProps = req.body;
+    User.findByIdAndUpdate(
+      { _id: siteTimeProps.userId },
+      { $push: { siteTimes: siteTimeProps.siteTimeId } }
+    )
+      .then(retUser => {
+        res.send(retUser);
+      })
+      .catch(next);
+  },
+  leaveSiteTime(req, res, next) {
+    const siteTimeProps = req.body;
+    User.findById({ _id: siteTimeProps.userId })
+      .then(retUser => {
+        retUser.siteTimes.pull(siteTimeProps.siteTimeId);
+        retUser.save().then(retUpdateUser => {
+          res.send(retUpdateUser);
+        });
+      })
+      .catch(next);
+  },
   getUserById(req, res, next) {
     const userId = req.params.id;
     User.findById({ _id: userId })
@@ -16,7 +38,18 @@ module.exports = {
         model: 'Site'
       })
       .then(retUser => {
-        console.log(retUser);
+        res.send(retUser);
+      })
+      .catch(next);
+  },
+  getUserSiteTimes(req, res, next) {
+    const userId = req.params.id;
+    User.findById({ _id: userId })
+      .populate({
+        path: 'siteTimes',
+        model: 'SiteTime'
+      })
+      .then(retUser => {
         res.send(retUser);
       })
       .catch(next);
