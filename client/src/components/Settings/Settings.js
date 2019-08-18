@@ -3,7 +3,6 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import RoleSettings from './RoleSettings';
-import Onboard from '../Onboard/Onboard';
 import { getUser } from '../../utils/utils';
 
 const Container = styled.div`
@@ -78,14 +77,7 @@ class Settings extends Component {
         </Container>
       );
     } else {
-      return (
-        <Container>
-          {/* <UserSitesList
-            userSites={this.state.userSites}
-            handleSiteView={this.handleSiteView}
-          /> */}
-        </Container>
-      );
+      return null;
     }
   }
 }

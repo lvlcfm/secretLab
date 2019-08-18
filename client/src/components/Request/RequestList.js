@@ -49,6 +49,8 @@ const RequestList = props => {
           </button>
         </RequestItem>
       );
+    } else {
+      return null;
     }
   });
   return <ListContainer>REQUEST ITEMS{requestItems}</ListContainer>;

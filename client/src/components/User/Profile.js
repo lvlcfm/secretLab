@@ -9,15 +9,6 @@ const Container = styled.div`
   align-items: center;
   margin-top: 100px;
 `;
-
-const ProfileContainer = styled.form`
-  border-left: solid #333 5px;
-  margin-right: 24px;
-  margin-top: 50px;
-  padding-left: 10px;
-  margin-bottom: 20px;
-`;
-
 class Profile extends Component {
   constructor(props) {
     super(props);

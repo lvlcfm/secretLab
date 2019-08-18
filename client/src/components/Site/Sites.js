@@ -21,6 +21,7 @@ class Sites extends Component {
       userSiteRequests: []
     };
     this.handleDeleteSite = this.handleDeleteSite.bind(this);
+    this.handleEditSite = this.handleEditSite.bind(this);
     this.handleSiteView = this.handleSiteView.bind(this);
     this.handleJoinSite = this.handleJoinSite.bind(this);
   }
@@ -45,6 +46,9 @@ class Sites extends Component {
   }
   handleSiteView(siteId) {
     this.props.history.push(`/sites/${siteId}`);
+  }
+  handleEditSite(siteId) {
+    this.props.history.push(`/editsite/${siteId}`);
   }
   handleDeleteSite(siteId) {
     axios
@@ -103,6 +107,7 @@ class Sites extends Component {
             userSiteRequests={this.state.userSiteRequests}
             sites={this.state.sites}
             handleDeleteSite={this.handleDeleteSite}
+            handleEditSite={this.handleEditSite}
             handleSiteView={this.handleSiteView}
             handleJoinSite={this.handleJoinSite}
           />

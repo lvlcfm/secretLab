@@ -6,6 +6,7 @@ import Sites from './Site/Sites';
 import UserSites from './Site/UserSites';
 import NavBar from './Navigation/Navbar';
 import CreateSite from './Site/CreateSite';
+import EditSite from './Site/EditSite';
 import Site from './Site/Site';
 import CreateLesson from './Lesson/CreateLesson';
 import Lesson from './Lesson/Lesson';
@@ -32,6 +33,7 @@ function App() {
             render={props => <Site {...props} />}
           />
           <Route exact path="/createsite" component={CreateSite} />
+          <Route exact path="/editsite/:id" component={EditSite} />
           <Route
             exact
             path="/sites/:id/createlesson"

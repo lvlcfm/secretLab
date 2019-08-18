@@ -50,6 +50,9 @@ const SitesList = props => {
         <button onClick={() => props.handleSiteView(site._id)}>
           VIEW SITE
         </button>
+        <button onClick={() => props.handleEditSite(site._id)}>
+          EDIT SITE
+        </button>
         {sitePending ? (
           'PENDING REVIEW'
         ) : (
