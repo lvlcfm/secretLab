@@ -21,7 +21,7 @@ const SiteItem = styled.div`
 const UserSitesList = props => {
   const siteTimes = props.userSites.map(site => {
     return (
-      <SiteItem>
+      <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
         <div>this is a site</div>
         <div>this is a site</div>

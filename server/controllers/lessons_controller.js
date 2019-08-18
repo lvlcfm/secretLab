@@ -6,7 +6,6 @@ module.exports = {
   },
   create(req, res, next) {
     const lessonProps = req.body;
-    console.log(lessonProps);
     Lesson.create(lessonProps)
       .then(lesson => res.send(lesson))
       .catch(next);
@@ -31,7 +30,6 @@ module.exports = {
     Lesson.findById({ _id: lessonId })
       .populate({ path: 'siteTime_id', model: 'SiteTime' })
       .then(lesson => {
-        console.log(lesson);
         res.send(lesson);
       })
       .catch(next);

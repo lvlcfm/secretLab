@@ -73,7 +73,9 @@ class Site extends Component {
         `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
       );
       this.setState({ lessons: resLessons.data });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   handleJoinSiteTime(userId, siteTimeId, siteId) {
     axios

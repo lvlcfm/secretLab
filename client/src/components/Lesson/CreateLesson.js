@@ -52,7 +52,6 @@ class CreateLesson extends Component {
       .get(`http://localhost:5000/api/sites/${this.props.match.params.id}`)
       .then(res => {
         // storing token from server
-        console.log(res.data);
         this.setState({
           siteObj: res.data,
           site_id: res.data._id,
@@ -102,7 +101,6 @@ class CreateLesson extends Component {
         siteTime_id: this.state.siteTimeId
       })
       .then(res => {
-        // storing token from server
         this.props.history.push(`/sites/${this.props.match.params.id}`);
       })
       .catch(err => {

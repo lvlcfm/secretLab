@@ -76,6 +76,19 @@ module.exports = {
       .then(user => res.send(user))
       .catch(next);
   },
+  editProfile(req, res, next) {
+    const userId = req.params.id;
+    const userProps = {
+      preferredName: req.body.preferredName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      pronouns: req.body.pronouns
+    };
+    User.findByIdAndUpdate({ _id: userId }, userProps)
+      .then(() => User.findById({ _id: userId }))
+      .then(user => res.send(user))
+      .catch(next);
+  },
   delete(req, res, next) {
     const userId = req.params.id;
     User.findByIdAndRemove({ _id: userId })

@@ -29,13 +29,12 @@ class UserSites extends Component {
   async componentDidMount() {
     const user = JSON.parse(localStorage.getItem('anovaUser'));
     try {
-      const resUserSites = await axios.post(
+      const resUserSites = await axios.get(
         `http://localhost:5000/api/users/${user._id}`
       );
       const resUserRoleRequests = await axios.get(
         `http://localhost:5000/api/requests/role/${user._id}`
       );
-      console.log(resUserRoleRequests.data);
       this.setState({
         userSites: resUserSites.data.sites,
         userRoleRequests: resUserRoleRequests.data,

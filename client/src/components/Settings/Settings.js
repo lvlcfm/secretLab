@@ -28,7 +28,7 @@ class Settings extends Component {
   async componentDidMount() {
     const user = JSON.parse(localStorage.getItem('anovaUser'));
     try {
-      const resUser = await axios.post(
+      const resUser = await axios.get(
         `http://localhost:5000/api/users/${user._id}`
       );
       const resUserRoleRequests = await axios.get(

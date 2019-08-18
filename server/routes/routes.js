@@ -14,9 +14,10 @@ module.exports = app => {
 
   //users
   app.get('/api/users/sitetimes/:id', UsersController.getUserSiteTimes);
-  app.post('/api/users/:id', UsersController.getUserById);
+  app.get('/api/users/:id', UsersController.getUserById);
   app.post('/api/users', UsersController.create);
   app.put('/api/users/:id', UsersController.edit);
+  app.put('/api/users/profile/:id', UsersController.editProfile);
   app.put('/api/users/sitetimes/join', UsersController.joinSiteTime);
   app.put('/api/users/sitetimes/leave', UsersController.leaveSiteTime);
   app.put('/api/users/:id', UsersController.edit);

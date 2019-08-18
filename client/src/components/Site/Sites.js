@@ -27,15 +27,13 @@ class Sites extends Component {
   async componentDidMount() {
     try {
       const user = getUser();
-      const resUser = await axios.post(
+      const resUser = await axios.get(
         `http://localhost:5000/api/users/${user._id}`
       );
       const resAllSites = await axios.get('http://localhost:5000/api/sites');
       const resUserSiteRequests = await axios.get(
         `http://localhost:5000/api/requests/site/${user._id}`
       );
-      console.log(resUserSiteRequests.data);
-      console.log('DEBUG');
       this.setState({
         sites: resAllSites.data,
         userSiteRequests: resUserSiteRequests.data,
