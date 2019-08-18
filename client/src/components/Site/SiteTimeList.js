@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment-timezone';
 
 const SiteTimesContainer = styled.div`
   display: flex;
@@ -53,11 +54,11 @@ const SiteTimeList = props => {
           </SiteTimeContent>
           <SiteTimeContent>
             <SiteTimeField>start time:</SiteTimeField>
-            {site.startTime.toUTCString().match(/([0-9][0-9]:[0-9][0-9])/g)}
+            {moment.tz(site.startTime, 'America/Los_Angeles').format('h:mm a')}
           </SiteTimeContent>
           <SiteTimeContent>
             <SiteTimeField>end time:</SiteTimeField>
-            {site.endTime.toUTCString().match(/([0-9][0-9]:[0-9][0-9])/g)}
+            {moment.tz(site.endTime, 'America/Los_Angeles').format('h:mm a')}
           </SiteTimeContent>
           <SiteTimeContent>
             <button onClick={() => props.handleDeleteSiteTime(site.siteNumber)}>

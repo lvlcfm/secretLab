@@ -64,6 +64,36 @@ class EditSite extends Component {
     this.handleAddSiteTime = this.handleAddSiteTime.bind(this);
     this.handleDeleteSiteTime = this.handleDeleteSiteTime.bind(this);
   }
+  async componentDidMount() {
+    try {
+      const resSite = await axios.get(
+        `http://localhost:5000/api/sites/${this.props.match.params.id}`
+      );
+
+      this.setState({
+        schoolName: resSite.data.schoolName ? resSite.data.schoolName : '',
+        classroom: resSite.data.classroom ? resSite.data.classroom : '',
+        level: resSite.data.level ? resSite.data.level : '',
+        schoolAddress: resSite.data.schoolAddress
+          ? resSite.data.schoolAddress
+          : '',
+        semester: resSite.data.semester ? resSite.data.semester : '',
+        siteContactEmail: resSite.data.siteContactEmail
+          ? resSite.data.siteContactEmail
+          : '',
+        siteContactName: resSite.data.siteContactName
+          ? resSite.data.siteContactName
+          : '',
+        style: resSite.data.style ? resSite.data.style : '',
+        year: resSite.data.year ? resSite.data.year : '',
+        siteTimes: resSite.data.siteTimes ? resSite.data.siteTimes : ''
+      });
+
+      console.log(resSite.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   // handle start time
   handleStartTimeChange(date) {
@@ -78,6 +108,7 @@ class EditSite extends Component {
   }
   handleAddSiteTime() {
     //something something add to current array
+    //DELETE site times individually and re query the site
     this.setState(prevState => ({
       siteTimes: [
         {
@@ -94,6 +125,7 @@ class EditSite extends Component {
     const newSites = this.state.siteTimes.filter(
       site => parseInt(site.siteNumber) !== siteNum
     );
+    //DELETE DIRECTLY HERE WITH AXIOS CALL, if it doesn't haave a _id then setState
     this.setState(prevState => ({
       siteTimes: [...newSites]
     }));
@@ -108,20 +140,26 @@ class EditSite extends Component {
 
   submit(event) {
     event.preventDefault();
+    // FUTURE SELF
+    // YOU MUST KEEP TRACK OF NEW SITE TIMES -- MAKE THEM
+    // IN THE BACKEND AND THEN UPDATE THE TIMES
+    // WE MUST HOLD ALL THE AACTIONS TO THE SITE TIMES SOMEHOW
+    //UNTIL WE UPDATAE THE WHOKE SITE COMPLETE
+    //KEEP TRACK OF NEW SITES
+    // when updtaing the site, create the new site times
+    // then update the site with them...
     axios
-      .post('http://localhost:5000/api/sites', {
-        siteProps: {
-          schoolName: this.state.schoolName,
-          schoolAddress: this.state.schoolAddress,
-          classroom: this.state.classroom,
-          style: this.state.style,
-          level: this.state.level,
-          semester: this.state.semester,
-          year: this.state.year,
-          siteContactName: this.state.siteContactName,
-          siteContactEmail: this.state.siteContactEmail
-        },
-        siteTimeProps: this.state.siteTimes
+      .put(`http://localhost:5000/api/sites/${this.props.match.params.id}`, {
+        schoolName: this.state.schoolName,
+        schoolAddress: this.state.schoolAddress,
+        classroom: this.state.classroom,
+        style: this.state.style,
+        level: this.state.level,
+        semester: this.state.semester,
+        year: this.state.year,
+        siteContactName: this.state.siteContactName,
+        siteContactEmail: this.state.siteContactEmail,
+        siteTimes: this.state.siteTimes
       })
       .then(res => {
         // storing token from server
@@ -141,7 +179,7 @@ class EditSite extends Component {
             <div>SITE TIME SLOTS</div>
           </div>
           <SiteTimeList
-            sites={this.state.siteTimes}
+            sites={this.state.siteTimes ? this.state.siteTimes : []}
             handleDeleteSiteTime={this.handleDeleteSiteTime}
           />
           <AddSiteContainer>
