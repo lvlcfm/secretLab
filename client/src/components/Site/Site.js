@@ -19,8 +19,11 @@ class Site extends Component {
     super(props);
     this.onCreateLesson = this.onCreateLesson.bind(this);
     this.handleLessonView = this.handleLessonView.bind(this);
+    this.handleRosterView = this.handleRosterView.bind(this);
     this.handleJoinSiteTime = this.handleJoinSiteTime.bind(this);
     this.handleLeaveSitetime = this.handleLeaveSitetime.bind(this);
+    this.handleDeleteLesson = this.handleDeleteLesson.bind(this);
+    this.handleEditLesson = this.handleEditLesson.bind(this);
     this.state = {
       lessons: [],
       allSiteTimes: [],
@@ -34,7 +37,9 @@ class Site extends Component {
       const resUserSiteTimes = await axios.get(
         `http://localhost:5000/api/users/sitetimes/${user._id}`
       );
-      const resLessons = await axios.get('http://localhost:5000/api/lessons');
+      const resLessons = await axios.get(
+        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
+      );
       const resSiteTimes = await axios.get(
         `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`
       );
@@ -47,6 +52,9 @@ class Site extends Component {
       console.log(e);
     }
   }
+  handleRosterView() {
+    this.props.history.push(`/sites/${this.props.match.params.id}/roster`);
+  }
   onCreateLesson() {
     this.props.history.push(
       `/sites/${this.props.match.params.id}/createlesson`
@@ -55,11 +63,24 @@ class Site extends Component {
   handleLessonView(lessonId) {
     this.props.history.push(`/lessons/${lessonId}`);
   }
-  handleJoinSiteTime(userId, siteTimeId) {
+  handleEditLesson(lessonId) {
+    this.props.history.push(`/edit/lessons/${lessonId}`);
+  }
+  async handleDeleteLesson(lessonId) {
+    try {
+      await axios.delete(`http://localhost:5000/api/lessons/${lessonId}`);
+      const resLessons = await axios.get(
+        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
+      );
+      this.setState({ lessons: resLessons.data });
+    } catch (e) {}
+  }
+  handleJoinSiteTime(userId, siteTimeId, siteId) {
     axios
       .put('http://localhost:5000/api/users/sitetimes/join', {
         userId: userId,
-        siteTimeId: siteTimeId
+        siteTimeId: siteTimeId,
+        siteId: siteId
       })
       .then(async res => {
         // need to update lessons
@@ -76,7 +97,6 @@ class Site extends Component {
           lessons: resLessons.data,
           allSiteTimes: resSiteTimes.data
         });
-        //this.props.history.push('/sites');
       })
       .catch(err => {
         console.log(err);
@@ -113,6 +133,16 @@ class Site extends Component {
   render() {
     return (
       <Container>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: '100px'
+          }}
+        >
+          <button onClick={this.handleRosterView}>WHOSE IN OUR SITE??</button>
+        </div>
         <JoinSiteTimeList
           userSiteTimes={this.state.userSiteTimes}
           allSiteTimes={this.state.allSiteTimes}
@@ -132,6 +162,8 @@ class Site extends Component {
         <LessonList
           lessons={this.state.lessons}
           handleLessonView={this.handleLessonView}
+          handleDeleteLesson={this.handleDeleteLesson}
+          handleEditLesson={this.handleEditLesson}
         />
       </Container>
     );

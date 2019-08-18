@@ -16,9 +16,17 @@ const UserSchema = new Schema({
   lastName: {
     type: String
   },
+  preferredName: {
+    type: String
+  },
+  bio: {
+    type: String
+  },
+  pronouns: { type: String },
   role: {
     type: String,
     required: true,
+    enum: ['GUEST', 'TEACHER', 'MENTEE', 'MENTOR', 'SITE LEADER', 'EXEC'],
     default: 'GUEST'
   },
   sites: [

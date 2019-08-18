@@ -18,8 +18,8 @@ module.exports = {
       .catch(next);
   },
   getRosterEntriesBySite(req, res, next) {
-    const rosterProps = req.body;
-    Roster.find({ site_id: rosterProps.siteId })
+    const siteId = req.params.id;
+    Roster.find({ site_id: siteId })
       .populate({
         path: 'siteTime_id',
         model: 'SiteTime'
@@ -27,13 +27,14 @@ module.exports = {
       .populate({ path: 'site_id', model: 'Site' })
       .populate({ path: 'user_id', model: 'User' })
       .then(rosterEntries => {
+        console.log(rosterEntries);
         res.send(rosterEntries);
       })
       .catch(next);
   },
   getRosterEntriesBySiteTime(req, res, next) {
-    const rosterProps = req.body;
-    Roster.find({ siteTime_id: rosterProps.siteTimeId })
+    const siteTimeId = req.params.id;
+    Roster.find({ siteTime_id: siteTimeId })
       .populate({
         path: 'siteTime_id',
         model: 'SiteTime'
@@ -41,6 +42,7 @@ module.exports = {
       .populate({ path: 'site_id', model: 'Site' })
       .populate({ path: 'user_id', model: 'User' })
       .then(rosterEntries => {
+        console.log(rosterEntries);
         res.send(rosterEntries);
       })
       .catch(next);

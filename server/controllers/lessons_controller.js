@@ -18,6 +18,24 @@ module.exports = {
       })
       .catch(next);
   },
+  getLessonsBySite(req, res, next) {
+    const siteId = req.params.id;
+    Lesson.find({ site_id: siteId })
+      .then(lessons => {
+        res.send(lessons);
+      })
+      .catch(next);
+  },
+  getLessonsById(req, res, next) {
+    const lessonId = req.params.id;
+    Lesson.findById({ _id: lessonId })
+      .populate({ path: 'siteTime_id', model: 'SiteTime' })
+      .then(lesson => {
+        console.log(lesson);
+        res.send(lesson);
+      })
+      .catch(next);
+  },
   edit(req, res, next) {
     const lessonId = req.params.id;
     const lessonProps = req.body;

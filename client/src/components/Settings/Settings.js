@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import UserSitesList from './UserSitesList';
+import RoleSettings from './RoleSettings';
 import Onboard from '../Onboard/Onboard';
 import { getUser } from '../../utils/utils';
 
@@ -13,40 +13,35 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-class UserSites extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userSites: [],
       userRoleRequests: [],
-      roleRequest: 'MENTEE',
+      roleRequest: '',
       userRole: ''
     };
-    this.handleSiteView = this.handleSiteView.bind(this);
     this.handleRoleRequestChange = this.handleRoleRequestChange.bind(this);
     this.handleRoleRequestSubmit = this.handleRoleRequestSubmit.bind(this);
   }
   async componentDidMount() {
     const user = JSON.parse(localStorage.getItem('anovaUser'));
     try {
-      const resUserSites = await axios.post(
+      const resUser = await axios.post(
         `http://localhost:5000/api/users/${user._id}`
       );
       const resUserRoleRequests = await axios.get(
         `http://localhost:5000/api/requests/role/${user._id}`
       );
-      console.log(resUserRoleRequests.data);
       this.setState({
-        userSites: resUserSites.data.sites,
         userRoleRequests: resUserRoleRequests.data,
-        userRole: resUserSites.data.role
+        userRole: resUser.data.role,
+        roleRequest: resUser.data.role
       });
     } catch (e) {
       console.log(e);
     }
-  }
-  handleSiteView(siteId) {
-    this.props.history.push(`/sites/${siteId}`);
   }
   handleRoleRequestChange(event) {
     this.setState({
@@ -70,11 +65,12 @@ class UserSites extends Component {
   }
 
   render() {
-    if (this.state.userRole === 'GUEST') {
+    if (this.state.userRole) {
       return (
         <Container>
-          <Onboard
+          <RoleSettings
             userRole={this.state.userRole}
+            roleRequest={this.state.roleRequest}
             userRoleRequests={this.state.userRoleRequests}
             handleRoleRequestChange={this.handleRoleRequestChange}
             handleRoleRequestSubmit={this.handleRoleRequestSubmit}
@@ -84,14 +80,14 @@ class UserSites extends Component {
     } else {
       return (
         <Container>
-          <UserSitesList
+          {/* <UserSitesList
             userSites={this.state.userSites}
             handleSiteView={this.handleSiteView}
-          />
+          /> */}
         </Container>
       );
     }
   }
 }
 
-export default withRouter(UserSites);
+export default withRouter(Settings);

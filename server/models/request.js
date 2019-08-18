@@ -22,7 +22,7 @@ const RequestSchema = new Schema({
   },
   roleRequest: {
     type: String,
-    enum: ['GUEST', 'MENTEE', 'MENTOR', 'SITE_LEADER', 'EXEC']
+    enum: ['GUEST', 'TEACHER', 'MENTEE', 'MENTOR', 'SITE LEADER', 'EXEC']
   },
   site_id: {
     type: Schema.Types.ObjectId,

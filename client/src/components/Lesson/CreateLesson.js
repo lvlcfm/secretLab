@@ -76,15 +76,10 @@ class CreateLesson extends Component {
     });
   }
   handleSiteTimeChange(event) {
-    console.log(event.target.value);
-    console.log('OH OKAY?');
     const newTimeList = this.state.siteTimes.filter(
       site => parseInt(site.siteNumber) === parseInt(event.target.value)
     );
     const newTime = newTimeList[0];
-    console.log(newTime);
-    console.log('???');
-    console.log('HMM????');
     this.setState({
       day: newTime.day,
       startTime: newTime.startTime,
@@ -98,7 +93,13 @@ class CreateLesson extends Component {
     axios
       .post('http://localhost:5000/api/lessons', {
         title: this.state.title,
-        site_id: this.state.site_id
+        summary: this.state.summary,
+        content: this.state.content,
+        media: this.state.media,
+        week: this.state.week,
+        exitTicket: this.state.exitTicket,
+        site_id: this.state.site_id,
+        siteTime_id: this.state.siteTimeId
       })
       .then(res => {
         // storing token from server
@@ -126,6 +127,66 @@ class CreateLesson extends Component {
                   name="title"
                   onChange={this.change}
                   value={this.state.title}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="summary">
+                Lesson Summary
+                <input
+                  id="summary"
+                  type="text"
+                  name="summary"
+                  onChange={this.change}
+                  value={this.state.summary}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="content">
+                Lesson content
+                <input
+                  id="content"
+                  type="text"
+                  name="content"
+                  onChange={this.change}
+                  value={this.state.content}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="media">
+                Lesson Media
+                <input
+                  id="media"
+                  type="text"
+                  name="media"
+                  onChange={this.change}
+                  value={this.state.media}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="week">
+                Lesson Week
+                <input
+                  id="week"
+                  type="text"
+                  name="week"
+                  onChange={this.change}
+                  value={this.state.week}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="exitTicket">
+                Lesson ExitTicket
+                <input
+                  id="exitTicket"
+                  type="text"
+                  name="exitTicket"
+                  onChange={this.change}
+                  value={this.state.exitTicket}
                 />
               </label>
             </div>

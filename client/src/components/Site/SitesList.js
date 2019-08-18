@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getUser } from '../../utils/utils';
 
 const ListContainer = styled.div`
   display: flex;
@@ -20,10 +21,24 @@ const SiteItem = styled.div`
 `;
 
 const SitesList = props => {
-  const user = JSON.parse(localStorage.getItem('anovaUser'));
-  //const user = getUser();
+  console.log(props.userSiteRequests);
+  // userRole={this.state.userRole}
+  //userSiteRequests={this.state.userSiteRequests}
+  //sites={this.state.sites}
+  //handleDeleteSite={this.handleDeleteSite}
+  //handleSiteView={this.handleSiteView}
+  //handleJoinSite={this.handleJoinSite}
+  const user = getUser();
   const siteTimes = props.sites.map(site => {
-    console.log(site);
+    var sitePending = false;
+    for (let index = 0; index < props.userSiteRequests.length; index++) {
+      const userSiteRequestEl = props.userSiteRequests[index];
+      if (userSiteRequestEl.site_id === site._id) {
+        sitePending = true;
+        console.log(userSiteRequestEl._id);
+        console.log('TRUE');
+      }
+    }
     return (
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
@@ -35,9 +50,13 @@ const SitesList = props => {
         <button onClick={() => props.handleSiteView(site._id)}>
           VIEW SITE
         </button>
-        <button onClick={() => props.handleJoinSite(site._id, user._id)}>
-          JOIN SITE
-        </button>
+        {sitePending ? (
+          'PENDING REVIEW'
+        ) : (
+          <button onClick={() => props.handleJoinSite(site._id, user._id)}>
+            JOIN SITE
+          </button>
+        )}
       </SiteItem>
     );
   });

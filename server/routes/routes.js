@@ -37,20 +37,24 @@ module.exports = app => {
 
   //lessons
   app.get('/api/lessons', LessonsController.index);
+  app.get('/api/lessons/:id', LessonsController.getLessonsById);
+  app.get('/api/lessons/site/:id', LessonsController.getLessonsBySite);
   app.post('/api/lessons', LessonsController.create);
   app.put('/api/lessons/:id', LessonsController.edit);
   app.delete('/api/lessons/:id', LessonsController.delete);
 
   //requests
   app.get('/api/requests', RequestsController.index);
+  app.get('/api/requests/role/:id', RequestsController.getUserRoleRequests);
+  app.get('/api/requests/site/:id', RequestsController.getUserSiteRequests);
   app.post('/api/requests', RequestsController.create);
   app.put('/api/requests/:id', RequestsController.edit);
   app.delete('/api/requests/:id', RequestsController.delete);
 
   //roster
-  app.get('/api/rosters/site', RostersController.getRosterEntriesBySite);
+  app.get('/api/rosters/site/:id', RostersController.getRosterEntriesBySite);
   app.get(
-    '/api/rosters/sitetime',
+    '/api/rosters/sitetime/:id',
     RostersController.getRosterEntriesBySiteTime
   );
   app.post('/api/rosters', RostersController.create);

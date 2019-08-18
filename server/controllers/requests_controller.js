@@ -19,6 +19,30 @@ module.exports = {
       .then(retRequests => res.send(retRequests))
       .catch(next);
   },
+  getUserRoleRequests(req, res, next) {
+    const userId = req.params.id;
+    Request.find({
+      $and: [
+        { requester: userId },
+        { requestType: 'ROLE' },
+        { status: 'PENDING' }
+      ]
+    })
+      .then(retRequests => res.send(retRequests))
+      .catch(next);
+  },
+  getUserSiteRequests(req, res, next) {
+    const userId = req.params.id;
+    Request.find({
+      $and: [
+        { requester: userId },
+        { requestType: 'SITE' },
+        { status: 'PENDING' }
+      ]
+    })
+      .then(retRequests => res.send(retRequests))
+      .catch(next);
+  },
   create(req, res, next) {
     const requestProps = req.body;
     Request.create(requestProps)
@@ -51,6 +75,26 @@ module.exports = {
           .catch(next);
       }
     } else if (requestType === 'ROLE') {
+      if (requestProps.status === 'APPROVED') {
+        Request.findByIdAndUpdate({ _id: requestId }, requestProps)
+          .then(() => Request.findById({ _id: requestId }))
+          .then(retRequest => {
+            User.findByIdAndUpdate(
+              { _id: retRequest.requester },
+              { role: retRequest.roleRequest }
+            )
+              .then(retUser => {
+                res.send(retRequest);
+              })
+              .catch(next);
+          })
+          .catch(next);
+      } else {
+        Request.findByIdAndUpdate({ _id: requestId }, requestProps)
+          .then(() => Request.findById({ _id: requestId }))
+          .then(retRequest => res.send(retRequest))
+          .catch(next);
+      }
     } else {
       console.log('MMMmmMMM');
     }

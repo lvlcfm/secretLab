@@ -21,7 +21,7 @@ const NavbarItemsRight = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 300px;
+  width: 400px;
 `;
 
 class Navbar extends Component {
@@ -40,7 +40,7 @@ class Navbar extends Component {
                 textDecoration: 'none',
                 margin: 0
               }}
-              to="/sites"
+              to="/home"
             >
               LOGO
             </Link>
@@ -85,6 +85,16 @@ class Navbar extends Component {
               to="/profile"
             >
               profile
+            </Link>
+            <Link
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                margin: 0
+              }}
+              to="/settings"
+            >
+              settings
             </Link>
             <Logout />
           </NavbarItemsRight>

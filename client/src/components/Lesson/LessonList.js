@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
 const ListContainer = styled.div`
   display: flex;
@@ -23,11 +24,20 @@ const LessonList = props => {
     const lessonPlans = props.lessons.map(lesson => {
       return (
         <LessonItem key={lesson._id}>
-          <h1>{lesson.title}</h1>
-          <div>this is a site</div>
-          <div>this is a site</div>
+          <h1>TITLE: {lesson.title ? lesson.title : ''}</h1>
+          <div>SUMMARY: {lesson.summary ? lesson.summary : ''}</div>
+          <div>CONTENT: {lesson.content ? lesson.content : ''}</div>
+          <div>MEDIA: {lesson.media ? lesson.media : ''}</div>
+          <div>WEEK: {lesson.week ? lesson.week : ''}</div>
+          <div>EXIT TICKET: {lesson.exitTicket ? lesson.exitTicket : ''}</div>
           <button onClick={() => props.handleLessonView(lesson._id)}>
             TAKE ME TO THE LESSON!
+          </button>
+          <button onClick={() => props.handleEditLesson(lesson._id)}>
+            EDIT LESSON
+          </button>
+          <button onClick={() => props.handleDeleteLesson(lesson._id)}>
+            DELETE LESSON
           </button>
         </LessonItem>
       );
@@ -38,4 +48,4 @@ const LessonList = props => {
   }
 };
 
-export default LessonList;
+export default withRouter(LessonList);

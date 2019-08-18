@@ -9,9 +9,12 @@ import CreateSite from './Site/CreateSite';
 import Site from './Site/Site';
 import CreateLesson from './Lesson/CreateLesson';
 import Lesson from './Lesson/Lesson';
+import EditLesson from './Lesson/EditLesson';
 import Dashboard from './Dashboard/Dashboard';
 import Requests from './Request/Requests';
 import Profile from './User/Profile';
+import Roster from './Roster/Roster';
+import Settings from './Settings/Settings';
 
 function App() {
   return (
@@ -35,9 +38,12 @@ function App() {
             component={CreateLesson}
           />
           <Route exact path="/lessons/:id" component={Lesson} />
+          <Route exact path="/edit/lessons/:id" component={EditLesson} />
+          <Route exact path="/sites/:id/roster" component={Roster} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/dashboard/requests" component={Requests} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/settings" component={Settings} />
         </Switch>
       </BrowserRouter>
     </div>

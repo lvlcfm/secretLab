@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import SitesList from './SitesList';
+import { getUser } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -15,22 +16,34 @@ class Sites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sites: []
+      userRole: '',
+      sites: [],
+      userSiteRequests: []
     };
     this.handleDeleteSite = this.handleDeleteSite.bind(this);
     this.handleSiteView = this.handleSiteView.bind(this);
     this.handleJoinSite = this.handleJoinSite.bind(this);
   }
-  componentDidMount() {
-    axios
-      .get('http://localhost:5000/api/sites')
-      .then(res => {
-        // storing token from server
-        this.setState({ sites: res.data });
-      })
-      .catch(err => {
-        console.log(err);
+  async componentDidMount() {
+    try {
+      const user = getUser();
+      const resUser = await axios.post(
+        `http://localhost:5000/api/users/${user._id}`
+      );
+      const resAllSites = await axios.get('http://localhost:5000/api/sites');
+      const resUserSiteRequests = await axios.get(
+        `http://localhost:5000/api/requests/site/${user._id}`
+      );
+      console.log(resUserSiteRequests.data);
+      console.log('DEBUG');
+      this.setState({
+        sites: resAllSites.data,
+        userSiteRequests: resUserSiteRequests.data,
+        userRole: resUser.data.role
       });
+    } catch (e) {
+      console.log(e);
+    }
   }
   handleSiteView(siteId) {
     this.props.history.push(`/sites/${siteId}`);
@@ -61,9 +74,12 @@ class Sites extends Component {
         requestType: 'SITE',
         site_id: siteId
       })
-      .then(res => {
-        // go back to sites
-        this.props.history.push('/sites');
+      .then(async res => {
+        const user = getUser();
+        const resUserSiteRequests = await axios.get(
+          `http://localhost:5000/api/requests/site/${user._id}`
+        );
+        this.setState({ userSiteRequests: resUserSiteRequests.data });
       })
       .catch(err => {
         console.log(err);
@@ -85,6 +101,8 @@ class Sites extends Component {
         </div>
         <Container>
           <SitesList
+            userRole={this.state.userRole}
+            userSiteRequests={this.state.userSiteRequests}
             sites={this.state.sites}
             handleDeleteSite={this.handleDeleteSite}
             handleSiteView={this.handleSiteView}

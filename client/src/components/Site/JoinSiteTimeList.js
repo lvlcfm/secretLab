@@ -83,7 +83,13 @@ const JoinSiteTimeList = props => {
               </button>
             ) : (
               <button
-                onClick={() => props.handleJoinSiteTime(user._id, siteTime._id)}
+                onClick={() =>
+                  props.handleJoinSiteTime(
+                    user._id,
+                    siteTime._id,
+                    siteTime.site_id
+                  )
+                }
               >
                 JOIN SITE TIME
               </button>

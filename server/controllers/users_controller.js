@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Roster = require('../models/roster');
 
 module.exports = {
   create(req, res, next) {
@@ -15,7 +16,13 @@ module.exports = {
       { $push: { siteTimes: siteTimeProps.siteTimeId } }
     )
       .then(retUser => {
-        res.send(retUser);
+        Roster.create({
+          user_id: siteTimeProps.userId,
+          siteTime_id: siteTimeProps.siteTimeId,
+          site_id: siteTimeProps.siteId
+        }).then(rosterEntry => {
+          res.send(rosterEntry);
+        });
       })
       .catch(next);
   },
@@ -25,7 +32,14 @@ module.exports = {
       .then(retUser => {
         retUser.siteTimes.pull(siteTimeProps.siteTimeId);
         retUser.save().then(retUpdateUser => {
-          res.send(retUpdateUser);
+          Roster.findOneAndDelete({
+            $and: [
+              { user_id: siteTimeProps.userId },
+              { siteTime_id: siteTimeProps.siteTimeId }
+            ]
+          }).then(retRosterEntry => {
+            res.send(retRosterEntry);
+          });
         });
       })
       .catch(next);
