@@ -115,7 +115,8 @@ class EditSite extends Component {
           day: this.state.day,
           startTime: this.state.startTime,
           endTime: this.state.endTime,
-          siteNumber: parseInt(this.state.siteNumber)
+          siteNumber: parseInt(this.state.siteNumber),
+          siteType: 'NEW'
         },
         ...prevState.siteTimes
       ]

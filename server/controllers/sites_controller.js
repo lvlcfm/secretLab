@@ -35,10 +35,43 @@ module.exports = {
       })
       .catch(next);
   },
-  edit(req, res, next) {
+  async edit(req, res, next) {
     const siteId = req.params.id;
     const siteProps = req.body;
+    const siteTimeProps = siteProps.siteTimes;
+    var newSiteTimes = [];
+    var allSiteTimes = [];
+    for (let index = 0; index < siteTimeProps.length; index++) {
+      const siteTimeEl = siteTimeProps[index];
+      if (siteTimeEl.hasOwnProperty('siteType')) {
+        console.log('YEAH! THIS HAS THE siteType property');
+        newSiteEl = new SiteTime({
+          day: siteTimeEl.day,
+          startTime: siteTimeEl.startTime,
+          endTime: siteTimeEl.endTime,
+          siteNumber: siteTimeEl.siteNumber
+        });
+        const newSiteElRet = await newSiteEl.save();
+        newSiteTimes.push(newSiteElRet);
+        console.log(newSiteTimes);
+      }
+    }
+    for (let index = 0; index < siteTimeProps.length; index++) {
+      const originalSiteElement = siteTimeProps[index];
+      if (originalSiteElement.hasOwnProperty('_id')) {
+        allSiteTimes.push(originalSiteElement);
+      }
+    }
+    for (let index = 0; index < newSiteTimes.length; index++) {
+      const newSiteElement = newSiteTimes[index];
+      allSiteTimes.push(newSiteElement);
+    }
+
+    console.log(siteTimeProps);
+    siteProps.siteTimes = allSiteTimes;
+    console.log('all site props');
     console.log(siteProps);
+    console.log('all site props');
     Site.findByIdAndUpdate({ _id: siteId }, siteProps)
       .then(() => Site.findById({ _id: siteId }))
       .then(site => {
