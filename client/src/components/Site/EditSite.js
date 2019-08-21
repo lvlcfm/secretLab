@@ -122,10 +122,24 @@ class EditSite extends Component {
       ]
     }));
   }
-  handleDeleteSiteTime(siteNum) {
+  async handleDeleteSiteTime(siteNum) {
     const newSites = this.state.siteTimes.filter(
       site => parseInt(site.siteNumber) !== siteNum
     );
+
+    // checking to see if we need to delete the item
+    // in the DB as opposed to deleting it in FE local state
+    for (let index = 0; index < this.state.siteTimes.length; index++) {
+      const siteTimeEl = this.state.siteTimes[index];
+      if (siteTimeEl.siteNumber === siteNum) {
+        if (siteTimeEl.hasOwnProperty('_id')) {
+          await axios.delete(
+            `http://localhost:5000/api/sitetimes/${siteTimeEl._id}`
+          );
+        }
+      }
+    }
+
     //DELETE DIRECTLY HERE WITH AXIOS CALL, if it doesn't haave a _id then setState
     this.setState(prevState => ({
       siteTimes: [...newSites]

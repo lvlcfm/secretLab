@@ -40,13 +40,19 @@ class Site extends Component {
       const resLessons = await axios.get(
         `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
       );
+
       const resSiteTimes = await axios.get(
-        `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`
+        `http://localhost:5000/api/sites/${this.props.match.params.id}`
       );
+
+      console.log('userSiteTimes');
+      console.log(resUserSiteTimes.data.siteTimes);
+      console.log('ALL SITE TIMES');
+      console.log(resSiteTimes.data);
       this.setState({
         userSiteTimes: resUserSiteTimes.data.siteTimes,
         lessons: resLessons.data,
-        allSiteTimes: resSiteTimes.data
+        allSiteTimes: resSiteTimes.data.siteTimes
       });
     } catch (e) {
       console.log(e);
@@ -125,7 +131,6 @@ class Site extends Component {
           lessons: resLessons.data,
           allSiteTimes: resSiteTimes.data
         });
-        console.log('welp we mae it');
       })
       .catch(err => {
         console.log(err);
