@@ -5,6 +5,7 @@ const SiteTimesController = require('../controllers/siteTime_controller');
 const LessonsController = require('../controllers/lessons_controller');
 const RequestsController = require('../controllers/requests_controller');
 const RostersController = require('../controllers/roster_controller');
+const Middleware = require('../middleware/jwt');
 
 module.exports = app => {
   //authentication
@@ -14,7 +15,11 @@ module.exports = app => {
 
   //users
   app.get('/api/users/sitetimes/:id', UsersController.getUserSiteTimes);
-  app.get('/api/users/:id', UsersController.getUserById);
+  app.get(
+    '/api/users/:id',
+    Middleware.validateToken,
+    UsersController.getUserById
+  );
   app.post('/api/users', UsersController.create);
   app.put('/api/users/:id', UsersController.edit);
   app.put('/api/users/profile/:id', UsersController.editProfile);
@@ -46,7 +51,11 @@ module.exports = app => {
 
   //requests
   app.get('/api/requests', RequestsController.index);
-  app.get('/api/requests/role/:id', RequestsController.getUserRoleRequests);
+  app.get(
+    '/api/requests/role/:id',
+    Middleware.validateToken,
+    RequestsController.getUserRoleRequests
+  );
   app.get('/api/requests/site/:id', RequestsController.getUserSiteRequests);
   app.post('/api/requests', RequestsController.create);
   app.put('/api/requests/:id', RequestsController.edit);

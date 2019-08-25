@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import UserSitesList from './UserSitesList';
 import Onboard from '../Onboard/Onboard';
-import { getUser } from '../../utils/utils';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -27,13 +27,24 @@ class UserSites extends Component {
     this.handleRoleRequestSubmit = this.handleRoleRequestSubmit.bind(this);
   }
   async componentDidMount() {
-    const user = JSON.parse(localStorage.getItem('anovaUser'));
+    const user = getUser();
+    const token = getJWT();
     try {
       const resUserSites = await axios.get(
-        `http://localhost:5000/api/users/${user._id}`
+        `http://localhost:5000/api/users/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       const resUserRoleRequests = await axios.get(
-        `http://localhost:5000/api/requests/role/${user._id}`
+        `http://localhost:5000/api/requests/role/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       this.setState({
         userSites: resUserSites.data.sites,
@@ -54,6 +65,7 @@ class UserSites extends Component {
   }
   handleRoleRequestSubmit() {
     const user = getUser();
+    const token = getJWT();
     axios
       .post('http://localhost:5000/api/requests', {
         requester: user._id,
