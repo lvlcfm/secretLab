@@ -220,6 +220,7 @@ class Site extends Component {
   }
 
   render() {
+    const user = getUser();
     return (
       <Container>
         <div
@@ -246,7 +247,11 @@ class Site extends Component {
             marginTop: '100px'
           }}
         >
-          <button onClick={this.onCreateLesson}>CREATE THEEEEE LESSON</button>
+          {user.role === 'EXEC' || user.role === 'SITE LEADER' ? (
+            <button onClick={this.onCreateLesson}>CREATE THEEEEE LESSON</button>
+          ) : (
+            ''
+          )}
         </div>
         <LessonList
           lessons={this.state.lessons}

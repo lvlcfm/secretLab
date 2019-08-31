@@ -21,47 +21,62 @@ const SiteItem = styled.div`
 `;
 
 const SitesList = props => {
-  console.log(props.userSiteRequests);
-  // userRole={this.state.userRole}
-  //userSiteRequests={this.state.userSiteRequests}
-  //sites={this.state.sites}
-  //handleDeleteSite={this.handleDeleteSite}
-  //handleSiteView={this.handleSiteView}
-  //handleJoinSite={this.handleJoinSite}
   const user = getUser();
   const siteTimes = props.sites.map(site => {
     var sitePending = false;
+    var siteJoined = false;
     for (let index = 0; index < props.userSiteRequests.length; index++) {
       const userSiteRequestEl = props.userSiteRequests[index];
       if (userSiteRequestEl.site_id === site._id) {
         sitePending = true;
-        console.log(userSiteRequestEl._id);
-        console.log('TRUE');
       }
     }
+    for (let index = 0; index < props.userSites.length; index++) {
+      const userSiteEl = props.userSites[index];
+      if (userSiteEl._id === site._id) {
+        siteJoined = true;
+      }
+    }
+
     return (
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
-        <button onClick={() => props.handleDeleteSite(site._id)}>
-          DELETE SITE
-        </button>
-        <button onClick={() => props.handleSiteView(site._id)}>
-          VIEW SITE
-        </button>
-        <button onClick={() => props.handleEditSite(site._id)}>
-          EDIT SITE
-        </button>
+        {user.role === 'EXEC' ? (
+          <button onClick={() => props.handleDeleteSite(site._id)}>
+            DELETE SITE
+          </button>
+        ) : (
+          ''
+        )}
+        {user.role === 'EXEC' ? (
+          <button onClick={() => props.handleSiteView(site._id)}>
+            VIEW SITE
+          </button>
+        ) : (
+          ''
+        )}
+        {user.role === 'EXEC' ? (
+          <button onClick={() => props.handleEditSite(site._id)}>
+            EDIT SITE
+          </button>
+        ) : (
+          ''
+        )}
         {sitePending ? (
           'PENDING REVIEW'
-        ) : (
+        ) : !siteJoined ? (
           <button onClick={() => props.handleJoinSite(site._id, user._id)}>
             JOIN SITE
+          </button>
+        ) : (
+          <button onClick={() => props.handleSiteView(site._id)}>
+            VIEW SITE
           </button>
         )}
       </SiteItem>
     );
   });
-  return <ListContainer>SiteTimes{siteTimes}</ListContainer>;
+  return <ListContainer>{siteTimes}</ListContainer>;
 };
 
 export default SitesList;

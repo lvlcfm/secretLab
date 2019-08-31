@@ -24,9 +24,10 @@ const RoleSettings = props => {
           <div>
             <RoleContainer onSubmit={props.handleRoleRequestSubmit}>
               <div>
-                <div>Hello! Welcome to ANova Labs!</div>
+                <div>Hello! Welcome to your settings page!</div>
                 <div>
-                  Let's get you onboarded by first having you request your role
+                  Here you can request a new role and an Exec will review your
+                  request
                 </div>
               </div>
               <div>
@@ -54,9 +55,10 @@ const RoleSettings = props => {
           <div>
             <RoleContainer onSubmit={props.handleRoleRequestSubmit}>
               <div>
-                <div>Hello! Welcome to ANova Labs!</div>
+                <div>Hello! Welcome to your settings page!</div>
                 <div>
-                  Let's get you onboarded by first having you request your role
+                  Here you can request a new role and an Exec will review your
+                  request
                 </div>
               </div>
               <div>
@@ -85,9 +87,10 @@ const RoleSettings = props => {
           <div>
             <RoleContainer onSubmit={props.handleRoleRequestSubmit}>
               <div>
-                <div>Hello! Welcome to ANova Labs!</div>
+                <div>Hello! Welcome to your settings page!</div>
                 <div>
-                  Let's get you onboarded by first having you request your role
+                  Here you can request a new role and an Exec will review your
+                  request
                 </div>
               </div>
               <div>
@@ -117,9 +120,10 @@ const RoleSettings = props => {
           <div>
             <RoleContainer onSubmit={props.handleRoleRequestSubmit}>
               <div>
-                <div>Hello! Welcome to ANova Labs!</div>
+                <div>Hello! Welcome to your settings page!</div>
                 <div>
-                  Let's get you onboarded by first having you request your role
+                  Here you can request a new role and an Exec will review your
+                  request
                 </div>
               </div>
               <div>

@@ -23,8 +23,6 @@ const UserSitesList = props => {
     return (
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
-        <div>this is a site</div>
-        <div>this is a site</div>
         <button onClick={() => props.handleSiteView(site._id)}>
           VIEW SITE
         </button>

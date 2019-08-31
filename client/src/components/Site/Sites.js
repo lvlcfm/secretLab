@@ -18,7 +18,8 @@ class Sites extends Component {
     this.state = {
       userRole: '',
       sites: [],
-      userSiteRequests: []
+      userSiteRequests: [],
+      userSites: []
     };
     this.handleDeleteSite = this.handleDeleteSite.bind(this);
     this.handleEditSite = this.handleEditSite.bind(this);
@@ -53,7 +54,8 @@ class Sites extends Component {
       this.setState({
         sites: resAllSites.data,
         userSiteRequests: resUserSiteRequests.data,
-        userRole: resUser.data.role
+        userRole: resUser.data.role,
+        userSites: resUser.data.sites
       });
     } catch (e) {
       console.log(e);
@@ -129,23 +131,30 @@ class Sites extends Component {
   }
 
   render() {
+    const user = getUser();
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: '100px'
-          }}
-        >
-          <Link to="/createsite">Create Site</Link>
-        </div>
+        {user.role === 'EXEC' ? (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: '100px'
+            }}
+          >
+            <Link to="/createsite">Create Site</Link>
+          </div>
+        ) : (
+          ''
+        )}
+
         <Container>
           <SitesList
             userRole={this.state.userRole}
             userSiteRequests={this.state.userSiteRequests}
             sites={this.state.sites}
+            userSites={this.state.userSites}
             handleDeleteSite={this.handleDeleteSite}
             handleEditSite={this.handleEditSite}
             handleSiteView={this.handleSiteView}
