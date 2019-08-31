@@ -42,8 +42,6 @@ const SitesList = props => {
     return (
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
-        <div>this is a site</div>
-        <div>this is a site</div>
         <button onClick={() => props.handleDeleteSite(site._id)}>
           DELETE SITE
         </button>

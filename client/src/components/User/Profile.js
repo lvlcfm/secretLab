@@ -79,20 +79,14 @@ class Profile extends Component {
           }
         }
       );
-      this.setState(
-        {
-          preferredName: resUserUpdate.data.preferredName,
-          firstName: resUserUpdate.data.firstName,
-          lastName: resUserUpdate.data.lastName,
-          pronouns: resUserUpdate.data.pronouns,
-          editable: false
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      console.log(resUserUpdate);
+      this.setState({
+        preferredName: resUserUpdate.data.preferredName,
+        firstName: resUserUpdate.data.firstName,
+        lastName: resUserUpdate.data.lastName,
+        pronouns: resUserUpdate.data.pronouns,
+        editable: false
+      });
     } catch (e) {
       console.log(e);
     }

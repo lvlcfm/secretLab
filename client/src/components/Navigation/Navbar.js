@@ -28,6 +28,8 @@ class Navbar extends Component {
   render() {
     const anovaToken = localStorage.getItem('anovaToken');
     const anovaUser = localStorage.getItem('anovaUser');
+    console.log(JSON.parse(anovaUser));
+    const userObj = JSON.parse(anovaUser);
     if (anovaToken === null && anovaUser === null) {
       return <div></div>;
     } else {
@@ -38,11 +40,12 @@ class Navbar extends Component {
               style={{
                 color: 'white',
                 textDecoration: 'none',
-                margin: 0
+                margin: 0,
+                marginLeft: '10px'
               }}
               to="/home"
             >
-              LOGO
+              SECRET LABS
             </Link>
           </NavbarItemsLeft>
           <NavbarItemsRight>
@@ -66,16 +69,21 @@ class Navbar extends Component {
             >
               sites
             </Link>
-            <Link
-              style={{
-                color: 'white',
-                textDecoration: 'none',
-                margin: 0
-              }}
-              to="/dashboard"
-            >
-              dashboard
-            </Link>
+            {userObj.role === 'EXEC' ? (
+              <Link
+                style={{
+                  color: 'white',
+                  textDecoration: 'none',
+                  margin: 0
+                }}
+                to="/dashboard"
+              >
+                dashboard
+              </Link>
+            ) : (
+              ''
+            )}
+
             <Link
               style={{
                 color: 'white',
