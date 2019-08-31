@@ -36,7 +36,7 @@ class Site extends Component {
     try {
       //get lesosns by SITE ID
       const resUserSiteTimes = await axios.get(
-        `http://localhost:5000/api/users/sitetimes/${user._id}`,
+        `/api/users/sitetimes/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -44,7 +44,7 @@ class Site extends Component {
         }
       );
       const resLessons = await axios.get(
-        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`,
+        `/api/lessons/site/${this.props.match.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -53,7 +53,7 @@ class Site extends Component {
       );
 
       const resSiteTimes = await axios.get(
-        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        `/api/sites/${this.props.match.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -87,13 +87,13 @@ class Site extends Component {
   async handleDeleteLesson(lessonId) {
     const token = getJWT();
     try {
-      await axios.delete(`http://localhost:5000/api/lessons/${lessonId}`, {
+      await axios.delete(`/api/lessons/${lessonId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       const resLessons = await axios.get(
-        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`,
+        `/api/lessons/site/${this.props.match.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -109,7 +109,7 @@ class Site extends Component {
     const token = getJWT();
     axios
       .put(
-        'http://localhost:5000/api/users/sitetimes/join',
+        '/api/users/sitetimes/join',
         {
           userId: userId,
           siteTimeId: siteTimeId,
@@ -126,23 +126,20 @@ class Site extends Component {
         const user = getUser();
         const token = getJWT();
         const resUserSiteTimes = await axios.get(
-          `http://localhost:5000/api/users/sitetimes/${user._id}`,
+          `/api/users/sitetimes/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }
         );
-        const resLessons = await axios.get(
-          'http://localhost:5000/api/lessons',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const resLessons = await axios.get('/api/lessons', {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        });
         const resSiteTimes = await axios.get(
-          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`,
+          `/api/sitetimes/site/${this.props.match.params.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -163,7 +160,7 @@ class Site extends Component {
     const token = getJWT();
     axios
       .put(
-        'http://localhost:5000/api/users/sitetimes/leave',
+        '/api/users/sitetimes/leave',
         {
           userId: userId,
           siteTimeId: siteTimeId
@@ -178,23 +175,20 @@ class Site extends Component {
         //need to refresh state
         const user = getUser();
         const resUserSiteTimes = await axios.get(
-          `http://localhost:5000/api/users/sitetimes/${user._id}`,
+          `/api/users/sitetimes/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }
         );
-        const resLessons = await axios.get(
-          'http://localhost:5000/api/lessons',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const resLessons = await axios.get('/api/lessons', {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        });
         const resSiteTimes = await axios.get(
-          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`,
+          `/api/sitetimes/site/${this.props.match.params.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
