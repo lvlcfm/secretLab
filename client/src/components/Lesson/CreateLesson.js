@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -48,8 +49,14 @@ class CreateLesson extends Component {
   }
 
   componentDidMount() {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .get(`http://localhost:5000/api/sites/${this.props.match.params.id}`)
+      .get(`http://localhost:5000/api/sites/${this.props.match.params.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(res => {
         // storing token from server
         this.setState({
@@ -88,18 +95,28 @@ class CreateLesson extends Component {
     });
   }
   submit(event) {
+    const user = getUser();
+    const token = getJWT();
     event.preventDefault();
     axios
-      .post('http://localhost:5000/api/lessons', {
-        title: this.state.title,
-        summary: this.state.summary,
-        content: this.state.content,
-        media: this.state.media,
-        week: this.state.week,
-        exitTicket: this.state.exitTicket,
-        site_id: this.state.site_id,
-        siteTime_id: this.state.siteTimeId
-      })
+      .post(
+        'http://localhost:5000/api/lessons',
+        {
+          title: this.state.title,
+          summary: this.state.summary,
+          content: this.state.content,
+          media: this.state.media,
+          week: this.state.week,
+          exitTicket: this.state.exitTicket,
+          site_id: this.state.site_id,
+          siteTime_id: this.state.siteTimeId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         this.props.history.push(`/sites/${this.props.match.params.id}`);
       })

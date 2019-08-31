@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import LessonList from '../Lesson/LessonList';
 import JoinSiteTimeList from '../Site/JoinSiteTimeList';
-import { getUser } from '../../utils/utils';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -32,17 +32,33 @@ class Site extends Component {
   }
   async componentDidMount() {
     const user = getUser();
+    const token = getJWT();
     try {
       //get lesosns by SITE ID
       const resUserSiteTimes = await axios.get(
-        `http://localhost:5000/api/users/sitetimes/${user._id}`
+        `http://localhost:5000/api/users/sitetimes/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       const resLessons = await axios.get(
-        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
+        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       const resSiteTimes = await axios.get(
-        `http://localhost:5000/api/sites/${this.props.match.params.id}`
+        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       console.log('userSiteTimes');
@@ -73,10 +89,21 @@ class Site extends Component {
     this.props.history.push(`/edit/lessons/${lessonId}`);
   }
   async handleDeleteLesson(lessonId) {
+    const user = getUser();
+    const token = getJWT();
     try {
-      await axios.delete(`http://localhost:5000/api/lessons/${lessonId}`);
+      await axios.delete(`http://localhost:5000/api/lessons/${lessonId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const resLessons = await axios.get(
-        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`
+        `http://localhost:5000/api/lessons/site/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       this.setState({ lessons: resLessons.data });
     } catch (e) {
@@ -84,21 +111,49 @@ class Site extends Component {
     }
   }
   handleJoinSiteTime(userId, siteTimeId, siteId) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .put('http://localhost:5000/api/users/sitetimes/join', {
-        userId: userId,
-        siteTimeId: siteTimeId,
-        siteId: siteId
-      })
+      .put(
+        'http://localhost:5000/api/users/sitetimes/join',
+        {
+          userId: userId,
+          siteTimeId: siteTimeId,
+          siteId: siteId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(async res => {
         // need to update lessons
         const user = getUser();
+        const token = getJWT();
         const resUserSiteTimes = await axios.get(
-          `http://localhost:5000/api/users/sitetimes/${user._id}`
+          `http://localhost:5000/api/users/sitetimes/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
-        const resLessons = await axios.get('http://localhost:5000/api/lessons');
+        const resLessons = await axios.get(
+          'http://localhost:5000/api/lessons',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
         const resSiteTimes = await axios.get(
-          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`
+          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         this.setState({
           userSiteTimes: resUserSiteTimes.data.siteTimes,
@@ -111,20 +166,47 @@ class Site extends Component {
       });
   }
   handleLeaveSitetime(userId, siteTimeId) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .put('http://localhost:5000/api/users/sitetimes/leave', {
-        userId: userId,
-        siteTimeId: siteTimeId
-      })
+      .put(
+        'http://localhost:5000/api/users/sitetimes/leave',
+        {
+          userId: userId,
+          siteTimeId: siteTimeId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(async res => {
         //need to refresh state
         const user = getUser();
         const resUserSiteTimes = await axios.get(
-          `http://localhost:5000/api/users/sitetimes/${user._id}`
+          `http://localhost:5000/api/users/sitetimes/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
-        const resLessons = await axios.get('http://localhost:5000/api/lessons');
+        const resLessons = await axios.get(
+          'http://localhost:5000/api/lessons',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
         const resSiteTimes = await axios.get(
-          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`
+          `http://localhost:5000/api/sitetimes/site/${this.props.match.params.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         this.setState({
           userSiteTimes: resUserSiteTimes.data.siteTimes,

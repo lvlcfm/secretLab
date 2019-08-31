@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { getUser } from '../../utils/utils';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   display: flex;
@@ -28,8 +28,14 @@ class Profile extends Component {
   }
   async componentDidMount() {
     const user = getUser();
+    const token = getJWT();
     const resUser = await axios.get(
-      `http://localhost:5000/api/users/${user._id}`
+      `http://localhost:5000/api/users/${user._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
     this.setState({
       preferredName: resUser.data.preferredName
@@ -58,6 +64,7 @@ class Profile extends Component {
     event.preventDefault();
     try {
       const user = getUser();
+      const token = getJWT();
       const resUserUpdate = await axios.put(
         `http://localhost:5000/api/users/profile/${user._id}`,
         {
@@ -65,15 +72,27 @@ class Profile extends Component {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           pronouns: this.state.pronouns
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
       );
-      this.setState({
-        preferredName: resUserUpdate.data.preferredName,
-        firstName: resUserUpdate.data.firstName,
-        lastName: resUserUpdate.data.lastName,
-        pronouns: resUserUpdate.data.pronouns,
-        editable: false
-      });
+      this.setState(
+        {
+          preferredName: resUserUpdate.data.preferredName,
+          firstName: resUserUpdate.data.firstName,
+          lastName: resUserUpdate.data.lastName,
+          pronouns: resUserUpdate.data.pronouns,
+          editable: false
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
     } catch (e) {
       console.log(e);
     }

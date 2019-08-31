@@ -3,7 +3,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import RoleSettings from './RoleSettings';
-import { getUser } from '../../utils/utils';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -25,13 +25,24 @@ class Settings extends Component {
     this.handleRoleRequestSubmit = this.handleRoleRequestSubmit.bind(this);
   }
   async componentDidMount() {
-    const user = JSON.parse(localStorage.getItem('anovaUser'));
+    const user = getUser();
+    const token = getJWT();
     try {
       const resUser = await axios.get(
-        `http://localhost:5000/api/users/${user._id}`
+        `http://localhost:5000/api/users/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       const resUserRoleRequests = await axios.get(
-        `http://localhost:5000/api/requests/role/${user._id}`
+        `http://localhost:5000/api/requests/role/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       this.setState({
         userRoleRequests: resUserRoleRequests.data,
@@ -49,12 +60,21 @@ class Settings extends Component {
   }
   handleRoleRequestSubmit() {
     const user = getUser();
+    const token = getJWT();
     axios
-      .post('http://localhost:5000/api/requests', {
-        requester: user._id,
-        requestType: 'ROLE',
-        roleRequest: this.state.roleRequest
-      })
+      .post(
+        'http://localhost:5000/api/requests',
+        {
+          requester: user._id,
+          requestType: 'ROLE',
+          roleRequest: this.state.roleRequest
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         this.props.history.push('/home');
       })

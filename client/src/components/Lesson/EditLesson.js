@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -51,13 +52,25 @@ class EditLesson extends Component {
   }
 
   async componentDidMount() {
+    const user = getUser();
+    const token = getJWT();
     try {
       const resLesson = await axios.get(
-        `http://localhost:5000/api/lessons/${this.props.match.params.id}`
+        `http://localhost:5000/api/lessons/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       console.log(resLesson.data);
       const resSite = await axios.get(
-        `http://localhost:5000/api/sites/${resLesson.data.site_id}`
+        `http://localhost:5000/api/sites/${resLesson.data.site_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       this.setState({
@@ -110,6 +123,8 @@ class EditLesson extends Component {
     });
   }
   submit(event) {
+    const user = getUser();
+    const token = getJWT();
     event.preventDefault();
     axios
       .put(`http://localhost:5000/api/lessons/${this.props.match.params.id}`, {

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SiteTimeList from './SiteTimeList';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -108,21 +109,31 @@ class CreateSite extends Component {
 
   submit(event) {
     event.preventDefault();
+    const user = getUser();
+    const token = getJWT();
     axios
-      .post('http://localhost:5000/api/sites', {
-        siteProps: {
-          schoolName: this.state.schoolName,
-          schoolAddress: this.state.schoolAddress,
-          classroom: this.state.classroom,
-          style: this.state.style,
-          level: this.state.level,
-          semester: this.state.semester,
-          year: this.state.year,
-          siteContactName: this.state.siteContactName,
-          siteContactEmail: this.state.siteContactEmail
+      .post(
+        'http://localhost:5000/api/sites',
+        {
+          siteProps: {
+            schoolName: this.state.schoolName,
+            schoolAddress: this.state.schoolAddress,
+            classroom: this.state.classroom,
+            style: this.state.style,
+            level: this.state.level,
+            semester: this.state.semester,
+            year: this.state.year,
+            siteContactName: this.state.siteContactName,
+            siteContactEmail: this.state.siteContactEmail
+          },
+          siteTimeProps: this.state.siteTimes
         },
-        siteTimeProps: this.state.siteTimes
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         // storing token from server
         this.props.history.push('/sites');

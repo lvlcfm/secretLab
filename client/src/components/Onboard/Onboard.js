@@ -30,7 +30,7 @@ const Onboard = props => {
             </div>
             <div>
               <label>
-                Site Time
+                Choose Your Role
                 <select
                   id="roleRequest"
                   name="roleRequest"

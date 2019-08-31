@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import SitesList from './SitesList';
-import { getUser } from '../../utils/utils';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -28,12 +28,27 @@ class Sites extends Component {
   async componentDidMount() {
     try {
       const user = getUser();
+      const token = getJWT();
       const resUser = await axios.get(
-        `http://localhost:5000/api/users/${user._id}`
+        `http://localhost:5000/api/users/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
-      const resAllSites = await axios.get('http://localhost:5000/api/sites');
+      const resAllSites = await axios.get('http://localhost:5000/api/sites', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const resUserSiteRequests = await axios.get(
-        `http://localhost:5000/api/requests/site/${user._id}`
+        `http://localhost:5000/api/requests/site/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       this.setState({
         sites: resAllSites.data,
@@ -51,12 +66,22 @@ class Sites extends Component {
     this.props.history.push(`/editsite/${siteId}`);
   }
   handleDeleteSite(siteId) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .delete(`http://localhost:5000/api/sites/${siteId}`)
+      .delete(`http://localhost:5000/api/sites/${siteId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(res => {
         // storing token from server
         axios
-          .get('http://localhost:5000/api/sites')
+          .get('http://localhost:5000/api/sites', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
           .then(res => {
             // storing token from server
             this.setState({ sites: res.data });
@@ -70,16 +95,31 @@ class Sites extends Component {
       });
   }
   handleJoinSite(siteId, userId) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .post('http://localhost:5000/api/requests', {
-        requester: userId,
-        requestType: 'SITE',
-        site_id: siteId
-      })
+      .post(
+        'http://localhost:5000/api/requests',
+        {
+          requester: userId,
+          requestType: 'SITE',
+          site_id: siteId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(async res => {
         const user = getUser();
         const resUserSiteRequests = await axios.get(
-          `http://localhost:5000/api/requests/site/${user._id}`
+          `http://localhost:5000/api/requests/site/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         this.setState({ userSiteRequests: resUserSiteRequests.data });
       })

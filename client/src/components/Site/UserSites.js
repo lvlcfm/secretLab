@@ -67,11 +67,19 @@ class UserSites extends Component {
     const user = getUser();
     const token = getJWT();
     axios
-      .post('http://localhost:5000/api/requests', {
-        requester: user._id,
-        requestType: 'ROLE',
-        roleRequest: this.state.roleRequest
-      })
+      .post(
+        'http://localhost:5000/api/requests',
+        {
+          requester: user._id,
+          requestType: 'ROLE',
+          roleRequest: this.state.roleRequest
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         this.props.history.push('/home');
       })

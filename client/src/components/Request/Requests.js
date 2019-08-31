@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import RequestList from './RequestList';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -22,8 +23,14 @@ class Requests extends Component {
     this.handleDenyRequest = this.handleDenyRequest.bind(this);
   }
   componentDidMount() {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .get('http://localhost:5000/api/requests')
+      .get('http://localhost:5000/api/requests', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(res => {
         this.setState({ requests: res.data });
       })
@@ -32,15 +39,29 @@ class Requests extends Component {
       });
   }
   handleApproveRequest(requestId, requestType) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .put(`http://localhost:5000/api/requests/${requestId}`, {
-        requestProps: { status: 'APPROVED' },
-        requestType: requestType
-      })
+      .put(
+        `http://localhost:5000/api/requests/${requestId}`,
+        {
+          requestProps: { status: 'APPROVED' },
+          requestType: requestType
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         // go back to sites
         axios
-          .get('http://localhost:5000/api/requests')
+          .get('http://localhost:5000/api/requests', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
           .then(res => {
             this.setState({ requests: res.data });
           })
@@ -54,15 +75,29 @@ class Requests extends Component {
   }
 
   handleDenyRequest(requestId, requestType) {
+    const user = getUser();
+    const token = getJWT();
     axios
-      .put(`http://localhost:5000/api/requests/${requestId}`, {
-        requestProps: { status: 'DENIED' },
-        requestType: requestType
-      })
+      .put(
+        `http://localhost:5000/api/requests/${requestId}`,
+        {
+          requestProps: { status: 'DENIED' },
+          requestType: requestType
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         // go back to sites
         axios
-          .get('http://localhost:5000/api/requests')
+          .get('http://localhost:5000/api/requests', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
           .then(res => {
             this.setState({ requests: res.data });
           })

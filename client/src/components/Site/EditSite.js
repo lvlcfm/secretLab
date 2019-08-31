@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SiteTimeList from './SiteTimeList';
+import { getUser, getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -65,9 +66,16 @@ class EditSite extends Component {
     this.handleDeleteSiteTime = this.handleDeleteSiteTime.bind(this);
   }
   async componentDidMount() {
+    const user = getUser();
+    const token = getJWT();
     try {
       const resSite = await axios.get(
-        `http://localhost:5000/api/sites/${this.props.match.params.id}`
+        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       this.setState({
@@ -133,8 +141,15 @@ class EditSite extends Component {
       const siteTimeEl = this.state.siteTimes[index];
       if (siteTimeEl.siteNumber === siteNum) {
         if (siteTimeEl.hasOwnProperty('_id')) {
+          const user = getUser();
+          const token = getJWT();
           await axios.delete(
-            `http://localhost:5000/api/sitetimes/${siteTimeEl._id}`
+            `http://localhost:5000/api/sitetimes/${siteTimeEl._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
           );
         }
       }
@@ -163,19 +178,29 @@ class EditSite extends Component {
     //KEEP TRACK OF NEW SITES
     // when updtaing the site, create the new site times
     // then update the site with them...
+    const user = getUser();
+    const token = getJWT();
     axios
-      .put(`http://localhost:5000/api/sites/${this.props.match.params.id}`, {
-        schoolName: this.state.schoolName,
-        schoolAddress: this.state.schoolAddress,
-        classroom: this.state.classroom,
-        style: this.state.style,
-        level: this.state.level,
-        semester: this.state.semester,
-        year: this.state.year,
-        siteContactName: this.state.siteContactName,
-        siteContactEmail: this.state.siteContactEmail,
-        siteTimes: this.state.siteTimes
-      })
+      .put(
+        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        {
+          schoolName: this.state.schoolName,
+          schoolAddress: this.state.schoolAddress,
+          classroom: this.state.classroom,
+          style: this.state.style,
+          level: this.state.level,
+          semester: this.state.semester,
+          year: this.state.year,
+          siteContactName: this.state.siteContactName,
+          siteContactEmail: this.state.siteContactEmail,
+          siteTimes: this.state.siteTimes
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         // storing token from server
         this.props.history.push('/sites');
