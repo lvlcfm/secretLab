@@ -28,7 +28,6 @@ module.exports = {
   },
   delete(req, res, next) {
     const siteTimeId = req.params.id;
-    console.log(siteTimeId);
     SiteTime.findByIdAndRemove({ _id: siteTimeId })
       .then(siteTime => res.status(204).send(siteTime))
       .catch(next);

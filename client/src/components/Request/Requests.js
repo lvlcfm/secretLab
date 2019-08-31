@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import RequestList from './RequestList';
-import { getUser, getJWT } from '../../utils/utils';
+import { getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -23,10 +23,9 @@ class Requests extends Component {
     this.handleDenyRequest = this.handleDenyRequest.bind(this);
   }
   componentDidMount() {
-    const user = getUser();
     const token = getJWT();
     axios
-      .get('http://localhost:5000/api/requests', {
+      .get('/api/requests', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -39,11 +38,10 @@ class Requests extends Component {
       });
   }
   handleApproveRequest(requestId, requestType) {
-    const user = getUser();
     const token = getJWT();
     axios
       .put(
-        `http://localhost:5000/api/requests/${requestId}`,
+        `/api/requests/${requestId}`,
         {
           requestProps: { status: 'APPROVED' },
           requestType: requestType
@@ -57,7 +55,7 @@ class Requests extends Component {
       .then(res => {
         // go back to sites
         axios
-          .get('http://localhost:5000/api/requests', {
+          .get('/api/requests', {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -75,11 +73,10 @@ class Requests extends Component {
   }
 
   handleDenyRequest(requestId, requestType) {
-    const user = getUser();
     const token = getJWT();
     axios
       .put(
-        `http://localhost:5000/api/requests/${requestId}`,
+        `/api/requests/${requestId}`,
         {
           requestProps: { status: 'DENIED' },
           requestType: requestType
@@ -93,7 +90,7 @@ class Requests extends Component {
       .then(res => {
         // go back to sites
         axios
-          .get('http://localhost:5000/api/requests', {
+          .get('/api/requests', {
             headers: {
               Authorization: `Bearer ${token}`
             }

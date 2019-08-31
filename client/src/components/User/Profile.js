@@ -29,14 +29,11 @@ class Profile extends Component {
   async componentDidMount() {
     const user = getUser();
     const token = getJWT();
-    const resUser = await axios.get(
-      `http://localhost:5000/api/users/${user._id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+    const resUser = await axios.get(`/api/users/${user._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    );
+    });
     this.setState({
       preferredName: resUser.data.preferredName
         ? resUser.data.preferredName
@@ -66,7 +63,7 @@ class Profile extends Component {
       const user = getUser();
       const token = getJWT();
       const resUserUpdate = await axios.put(
-        `http://localhost:5000/api/users/profile/${user._id}`,
+        `/api/users/profile/${user._id}`,
         {
           preferredName: this.state.preferredName,
           firstName: this.state.firstName,
@@ -79,7 +76,6 @@ class Profile extends Component {
           }
         }
       );
-      console.log(resUserUpdate);
       this.setState({
         preferredName: resUserUpdate.data.preferredName,
         firstName: resUserUpdate.data.firstName,

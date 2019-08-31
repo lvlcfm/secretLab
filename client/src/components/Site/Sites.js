@@ -30,21 +30,18 @@ class Sites extends Component {
     try {
       const user = getUser();
       const token = getJWT();
-      const resUser = await axios.get(
-        `http://localhost:5000/api/users/${user._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const resUser = await axios.get(`/api/users/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
-      const resAllSites = await axios.get('http://localhost:5000/api/sites', {
+      });
+      const resAllSites = await axios.get('/api/sites', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       const resUserSiteRequests = await axios.get(
-        `http://localhost:5000/api/requests/site/${user._id}`,
+        `/api/requests/site/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -68,10 +65,9 @@ class Sites extends Component {
     this.props.history.push(`/editsite/${siteId}`);
   }
   handleDeleteSite(siteId) {
-    const user = getUser();
     const token = getJWT();
     axios
-      .delete(`http://localhost:5000/api/sites/${siteId}`, {
+      .delete(`/api/sites/${siteId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -79,7 +75,7 @@ class Sites extends Component {
       .then(res => {
         // storing token from server
         axios
-          .get('http://localhost:5000/api/sites', {
+          .get('/api/sites', {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -97,11 +93,10 @@ class Sites extends Component {
       });
   }
   handleJoinSite(siteId, userId) {
-    const user = getUser();
     const token = getJWT();
     axios
       .post(
-        'http://localhost:5000/api/requests',
+        '/api/requests',
         {
           requester: userId,
           requestType: 'SITE',
@@ -116,7 +111,7 @@ class Sites extends Component {
       .then(async res => {
         const user = getUser();
         const resUserSiteRequests = await axios.get(
-          `http://localhost:5000/api/requests/site/${user._id}`,
+          `/api/requests/site/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`

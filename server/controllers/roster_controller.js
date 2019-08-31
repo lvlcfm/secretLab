@@ -27,7 +27,6 @@ module.exports = {
       .populate({ path: 'site_id', model: 'Site' })
       .populate({ path: 'user_id', model: 'User' })
       .then(rosterEntries => {
-        console.log(rosterEntries);
         res.send(rosterEntries);
       })
       .catch(next);
@@ -42,7 +41,6 @@ module.exports = {
       .populate({ path: 'site_id', model: 'Site' })
       .populate({ path: 'user_id', model: 'User' })
       .then(rosterEntries => {
-        console.log(rosterEntries);
         res.send(rosterEntries);
       })
       .catch(next);

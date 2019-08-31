@@ -43,7 +43,6 @@ const EmptyStateMessage = styled.div`
 const SiteTimeList = props => {
   if (props.sites.length !== 0) {
     const siteTimes = props.sites.map(site => {
-      console.log(site);
       return (
         <SiteTimeItem key={Math.random()}>
           <SiteTimeContent>

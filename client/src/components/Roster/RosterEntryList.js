@@ -21,7 +21,6 @@ const RosterEntry = styled.div`
 
 const RosterEntryList = props => {
   const rosterEntries = props.rosterEntries.map(rosterEntry => {
-    console.log(rosterEntry);
     return (
       <RosterEntry key={rosterEntry._id}>
         <div>

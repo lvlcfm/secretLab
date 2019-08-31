@@ -61,10 +61,6 @@ class Site extends Component {
         }
       );
 
-      console.log('userSiteTimes');
-      console.log(resUserSiteTimes.data.siteTimes);
-      console.log('ALL SITE TIMES');
-      console.log(resSiteTimes.data);
       this.setState({
         userSiteTimes: resUserSiteTimes.data.siteTimes,
         lessons: resLessons.data,
@@ -89,7 +85,6 @@ class Site extends Component {
     this.props.history.push(`/edit/lessons/${lessonId}`);
   }
   async handleDeleteLesson(lessonId) {
-    const user = getUser();
     const token = getJWT();
     try {
       await axios.delete(`http://localhost:5000/api/lessons/${lessonId}`, {
@@ -111,7 +106,6 @@ class Site extends Component {
     }
   }
   handleJoinSiteTime(userId, siteTimeId, siteId) {
-    const user = getUser();
     const token = getJWT();
     axios
       .put(
@@ -166,7 +160,6 @@ class Site extends Component {
       });
   }
   handleLeaveSitetime(userId, siteTimeId) {
-    const user = getUser();
     const token = getJWT();
     axios
       .put(

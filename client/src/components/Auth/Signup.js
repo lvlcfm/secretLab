@@ -34,7 +34,7 @@ const Wrapper = styled.section`
 class Signup extends Component {
   handleOnSuccess = response => {
     axios
-      .post('http://localhost:5000/api/signup', response.profileObj)
+      .post('/api/signup', response.profileObj)
       .then(res => {
         console.log(res.data);
 

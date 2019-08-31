@@ -35,7 +35,7 @@ const Wrapper = styled.section`
 class Signin extends Component {
   handleOnSuccess = response => {
     axios
-      .post('http://localhost:5000/api/login', response.profileObj)
+      .post('/api/login', response.profileObj)
       .then(res => {
         localStorage.setItem('anovaToken', JSON.stringify(res.data.token));
         localStorage.setItem('anovaUser', JSON.stringify(res.data.user));

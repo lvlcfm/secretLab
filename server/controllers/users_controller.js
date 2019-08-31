@@ -46,7 +46,6 @@ module.exports = {
   },
   getUserById(req, res, next) {
     const userId = req.params.id;
-    console.log(req);
     User.findById({ _id: userId })
       .populate({
         path: 'sites',

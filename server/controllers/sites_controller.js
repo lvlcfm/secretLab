@@ -44,7 +44,6 @@ module.exports = {
     for (let index = 0; index < siteTimeProps.length; index++) {
       const siteTimeEl = siteTimeProps[index];
       if (siteTimeEl.hasOwnProperty('siteType')) {
-        console.log('YEAH! THIS HAS THE siteType property');
         newSiteEl = new SiteTime({
           day: siteTimeEl.day,
           startTime: siteTimeEl.startTime,
@@ -53,7 +52,6 @@ module.exports = {
         });
         const newSiteElRet = await newSiteEl.save();
         newSiteTimes.push(newSiteElRet);
-        console.log(newSiteTimes);
       }
     }
     for (let index = 0; index < siteTimeProps.length; index++) {
@@ -67,16 +65,10 @@ module.exports = {
       allSiteTimes.push(newSiteElement);
     }
 
-    console.log(siteTimeProps);
     siteProps.siteTimes = allSiteTimes;
-    console.log('all site props');
-    console.log(siteProps);
-    console.log('all site props');
     Site.findByIdAndUpdate({ _id: siteId }, siteProps)
       .then(() => Site.findById({ _id: siteId }))
       .then(site => {
-        console.log('return update');
-        console.log(site);
         res.send(site);
       })
       .catch(next);

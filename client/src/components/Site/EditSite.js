@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SiteTimeList from './SiteTimeList';
-import { getUser, getJWT } from '../../utils/utils';
+import { getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -66,11 +66,10 @@ class EditSite extends Component {
     this.handleDeleteSiteTime = this.handleDeleteSiteTime.bind(this);
   }
   async componentDidMount() {
-    const user = getUser();
     const token = getJWT();
     try {
       const resSite = await axios.get(
-        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        `/api/sites/${this.props.match.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -96,8 +95,6 @@ class EditSite extends Component {
         year: resSite.data.year ? resSite.data.year : '',
         siteTimes: resSite.data.siteTimes ? resSite.data.siteTimes : ''
       });
-
-      console.log(resSite.data);
     } catch (e) {
       console.log(e);
     }
@@ -141,16 +138,12 @@ class EditSite extends Component {
       const siteTimeEl = this.state.siteTimes[index];
       if (siteTimeEl.siteNumber === siteNum) {
         if (siteTimeEl.hasOwnProperty('_id')) {
-          const user = getUser();
           const token = getJWT();
-          await axios.delete(
-            `http://localhost:5000/api/sitetimes/${siteTimeEl._id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
+          await axios.delete(`/api/sitetimes/${siteTimeEl._id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
             }
-          );
+          });
         }
       }
     }
@@ -174,15 +167,14 @@ class EditSite extends Component {
     // YOU MUST KEEP TRACK OF NEW SITE TIMES -- MAKE THEM
     // IN THE BACKEND AND THEN UPDATE THE TIMES
     // WE MUST HOLD ALL THE AACTIONS TO THE SITE TIMES SOMEHOW
-    //UNTIL WE UPDATAE THE WHOKE SITE COMPLETE
-    //KEEP TRACK OF NEW SITES
+    // UNTIL WE UPDATAE THE WHOKE SITE COMPLETE
+    // KEEP TRACK OF NEW SITES
     // when updtaing the site, create the new site times
     // then update the site with them...
-    const user = getUser();
     const token = getJWT();
     axios
       .put(
-        `http://localhost:5000/api/sites/${this.props.match.params.id}`,
+        `/api/sites/${this.props.match.params.id}`,
         {
           schoolName: this.state.schoolName,
           schoolAddress: this.state.schoolAddress,

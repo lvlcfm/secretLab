@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import { getUser, getJWT } from '../../utils/utils';
+import { getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -52,26 +52,21 @@ class EditLesson extends Component {
   }
 
   async componentDidMount() {
-    const user = getUser();
     const token = getJWT();
     try {
       const resLesson = await axios.get(
-        `http://localhost:5000/api/lessons/${this.props.match.params.id}`,
+        `/api/lessons/${this.props.match.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
       );
-      console.log(resLesson.data);
-      const resSite = await axios.get(
-        `http://localhost:5000/api/sites/${resLesson.data.site_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const resSite = await axios.get(`/api/sites/${resLesson.data.site_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
       this.setState({
         siteObj: resSite.data,
@@ -107,13 +102,10 @@ class EditLesson extends Component {
     });
   }
   handleSiteTimeChange(event) {
-    console.log(event.target.value);
-    console.log(event.target.name);
     const newTimeList = this.state.siteTimes.filter(
       site => parseInt(site.siteNumber) === parseInt(event.target.value)
     );
     const newTime = newTimeList[0];
-    console.log(newTime);
     this.setState({
       day: newTime.day,
       startTime: newTime.startTime,
@@ -123,20 +115,27 @@ class EditLesson extends Component {
     });
   }
   submit(event) {
-    const user = getUser();
     const token = getJWT();
     event.preventDefault();
     axios
-      .put(`http://localhost:5000/api/lessons/${this.props.match.params.id}`, {
-        title: this.state.lesson_title,
-        summary: this.state.lesson_summary,
-        content: this.state.lesson_content,
-        media: this.state.lesson_media,
-        week: this.state.lesson_week,
-        exitTicket: this.state.lesson_exitTicket,
-        site_id: this.state.site_id,
-        siteTime_id: this.state.siteTime_id
-      })
+      .put(
+        `/api/lessons/${this.props.match.params.id}`,
+        {
+          title: this.state.lesson_title,
+          summary: this.state.lesson_summary,
+          content: this.state.lesson_content,
+          media: this.state.lesson_media,
+          week: this.state.lesson_week,
+          exitTicket: this.state.lesson_exitTicket,
+          site_id: this.state.site_id,
+          siteTime_id: this.state.siteTime_id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then(res => {
         // storing token from server
         this.props.history.push(`/sites/${this.state.site_id}`);
@@ -169,7 +168,6 @@ class EditLesson extends Component {
         }
       }
     }
-    console.log(optionList);
     return (
       <Container>
         <div>

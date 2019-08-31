@@ -28,16 +28,13 @@ class Settings extends Component {
     const user = getUser();
     const token = getJWT();
     try {
-      const resUser = await axios.get(
-        `http://localhost:5000/api/users/${user._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const resUser = await axios.get(`/api/users/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
       const resUserRoleRequests = await axios.get(
-        `http://localhost:5000/api/requests/role/${user._id}`,
+        `/api/requests/role/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -63,7 +60,7 @@ class Settings extends Component {
     const token = getJWT();
     axios
       .post(
-        'http://localhost:5000/api/requests',
+        '/api/requests',
         {
           requester: user._id,
           requestType: 'ROLE',

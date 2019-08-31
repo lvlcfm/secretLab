@@ -42,18 +42,13 @@ const EmptyStateMessage = styled.div`
 
 const JoinSiteTimeList = props => {
   const user = getUser();
-  console.log('HI THIS IS THE USER ID');
-  console.log(user._id);
   if (props.allSiteTimes.length !== 0) {
     const siteTimes = props.allSiteTimes.map(siteTime => {
-      console.log(siteTime);
       var joinedSite = false;
       for (let index = 0; index < props.userSiteTimes.length; index++) {
         const userSiteTimeEl = props.userSiteTimes[index];
         if (userSiteTimeEl._id === siteTime._id) {
           joinedSite = true;
-          console.log(userSiteTimeEl._id);
-          console.log('TRUE');
         }
       }
       return (

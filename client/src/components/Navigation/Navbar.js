@@ -28,7 +28,6 @@ class Navbar extends Component {
   render() {
     const anovaToken = localStorage.getItem('anovaToken');
     const anovaUser = localStorage.getItem('anovaUser');
-    console.log(JSON.parse(anovaUser));
     const userObj = JSON.parse(anovaUser);
     if (anovaToken === null && anovaUser === null) {
       return <div></div>;

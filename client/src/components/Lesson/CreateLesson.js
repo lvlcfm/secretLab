@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import { getUser, getJWT } from '../../utils/utils';
+import { getJWT } from '../../utils/utils';
 
 const Container = styled.div`
   width: 100%;
@@ -49,10 +49,9 @@ class CreateLesson extends Component {
   }
 
   componentDidMount() {
-    const user = getUser();
     const token = getJWT();
     axios
-      .get(`http://localhost:5000/api/sites/${this.props.match.params.id}`, {
+      .get(`/api/sites/${this.props.match.params.id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -95,12 +94,11 @@ class CreateLesson extends Component {
     });
   }
   submit(event) {
-    const user = getUser();
     const token = getJWT();
     event.preventDefault();
     axios
       .post(
-        'http://localhost:5000/api/lessons',
+        '/api/lessons',
         {
           title: this.state.title,
           summary: this.state.summary,
