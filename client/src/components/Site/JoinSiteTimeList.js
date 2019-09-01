@@ -70,6 +70,17 @@ const JoinSiteTimeList = props => {
           <SiteTimeContent>
             {joinedSite ? (
               <button
+                style={{
+                  color: 'black',
+                  backgroundColor: '#EE7E80',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
                 onClick={() =>
                   props.handleLeaveSiteTime(user._id, siteTime._id)
                 }
@@ -78,6 +89,17 @@ const JoinSiteTimeList = props => {
               </button>
             ) : (
               <button
+                style={{
+                  color: 'black',
+                  backgroundColor: '#48D7C5',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
                 onClick={() =>
                   props.handleJoinSiteTime(
                     user._id,

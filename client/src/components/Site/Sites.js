@@ -138,7 +138,19 @@ class Sites extends Component {
               marginTop: '100px'
             }}
           >
-            <Link to="/createsite">Create Site</Link>
+            <Link
+              style={{
+                color: '#333',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px'
+              }}
+              to="/createsite"
+            >
+              Create Site
+            </Link>
           </div>
         ) : (
           ''

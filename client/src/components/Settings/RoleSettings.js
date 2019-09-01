@@ -44,7 +44,21 @@ const RoleSettings = props => {
                   </select>
                 </label>
               </div>
-              <input type="submit" value="submit" />
+              <input
+                style={{
+                  color: '#333',
+                  backgroundColor: '#5CCFB4',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
+                type="submit"
+                value="submit"
+              />
             </RoleContainer>
           </div>
         </Container>
@@ -76,7 +90,21 @@ const RoleSettings = props => {
                   </select>
                 </label>
               </div>
-              <input type="submit" value="submit" />
+              <input
+                style={{
+                  color: '#333',
+                  backgroundColor: '#5CCFB4',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
+                type="submit"
+                value="submit"
+              />
             </RoleContainer>
           </div>
         </Container>
@@ -109,7 +137,21 @@ const RoleSettings = props => {
                   </select>
                 </label>
               </div>
-              <input type="submit" value="submit" />
+              <input
+                style={{
+                  color: '#333',
+                  backgroundColor: '#5CCFB4',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
+                type="submit"
+                value="submit"
+              />
             </RoleContainer>
           </div>
         </Container>
@@ -142,14 +184,34 @@ const RoleSettings = props => {
                   </select>
                 </label>
               </div>
-              <input type="submit" value="submit" />
+              <input
+                style={{
+                  color: '#333',
+                  backgroundColor: '#5CCFB4',
+                  textDecoration: 'none',
+                  border: 'solid #333 3px',
+                  borderRadius: '6px',
+                  boxShadow: '4px 4px 0px #333',
+                  padding: '10px',
+                  margin: '10px',
+                  marginLeft: '0px'
+                }}
+                type="submit"
+                value="submit"
+              />
             </RoleContainer>
           </div>
         </Container>
       );
     }
   } else if (props.userRoleRequests.length > 0) {
-    return <div>THANKS FOR WAITING!</div>;
+    return (
+      <Container>
+        <RoleContainer>
+          THANKS FOR WAITING! Your role request is under review Σ(ノ°▽°)ノ
+        </RoleContainer>
+      </Container>
+    );
   }
 };
 

@@ -23,7 +23,19 @@ const UserSitesList = props => {
     return (
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
-        <button onClick={() => props.handleSiteView(site._id)}>
+        <button
+          style={{
+            color: '#333',
+            backgroundColor: '#5CCFB4',
+            textDecoration: 'none',
+            border: 'solid #333 3px',
+            borderRadius: '6px',
+            boxShadow: '4px 4px 0px #333',
+            padding: '10px',
+            margin: '10px'
+          }}
+          onClick={() => props.handleSiteView(site._id)}
+        >
           VIEW SITE
         </button>
       </SiteItem>

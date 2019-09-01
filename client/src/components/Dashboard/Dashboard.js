@@ -13,7 +13,21 @@ const Dashboard = () => {
   return (
     <Container>
       This is the future dashboard for all EdTech ANova endevours
-      <Link to="/dashboard/requests">REQUESTS</Link>
+      <Link
+        style={{
+          color: '#333',
+          backgroundColor: '#E9CDDB',
+          textDecoration: 'none',
+          border: 'solid #333 3px',
+          borderRadius: '6px',
+          boxShadow: '4px 4px 0px #333',
+          padding: '10px',
+          marginTop: '20px'
+        }}
+        to="/dashboard/requests"
+      >
+        REQUESTS
+      </Link>
     </Container>
   );
 };

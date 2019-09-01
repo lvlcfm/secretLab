@@ -156,10 +156,10 @@ class Site extends Component {
         console.log(err);
       });
   }
-  handleLeaveSitetime(userId, siteTimeId) {
+  async handleLeaveSitetime(userId, siteTimeId) {
     const token = getJWT();
-    axios
-      .put(
+    try {
+      await axios.put(
         '/api/users/sitetimes/leave',
         {
           userId: userId,
@@ -170,40 +170,41 @@ class Site extends Component {
             Authorization: `Bearer ${token}`
           }
         }
-      )
-      .then(async res => {
-        //need to refresh state
-        const user = getUser();
-        const resUserSiteTimes = await axios.get(
-          `/api/users/sitetimes/${user._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
-        const resLessons = await axios.get('/api/lessons', {
+      );
+
+      const user = getUser();
+      const resUserSiteTimes = await axios.get(
+        `/api/users/sitetimes/${user._id}`,
+        {
           headers: {
             Authorization: `Bearer ${token}`
           }
-        });
-        const resSiteTimes = await axios.get(
-          `/api/sitetimes/site/${this.props.match.params.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
-        this.setState({
-          userSiteTimes: resUserSiteTimes.data.siteTimes,
-          lessons: resLessons.data,
-          allSiteTimes: resSiteTimes.data
-        });
-      })
-      .catch(err => {
-        console.log(err);
+        }
+      );
+      const resLessons = await axios.get('/api/lessons', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
+      const resSiteTimes = await axios.get(
+        `/api/sitetimes/site/${this.props.match.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log(resSiteTimes.data);
+      this.setState({
+        userSiteTimes: resUserSiteTimes.data.siteTimes,
+        lessons: resLessons.data,
+        allSiteTimes: resSiteTimes.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    //need to refresh state
   }
 
   render() {
@@ -218,7 +219,21 @@ class Site extends Component {
             marginTop: '100px'
           }}
         >
-          <button onClick={this.handleRosterView}>WHOSE IN OUR SITE??</button>
+          <button
+            style={{
+              color: 'black',
+              backgroundColor: '#E9CDDB',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={this.handleRosterView}
+          >
+            SITE ROSTER
+          </button>
         </div>
         <JoinSiteTimeList
           userSiteTimes={this.state.userSiteTimes}

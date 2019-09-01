@@ -9,6 +9,11 @@ const Container = styled.div`
   align-items: center;
   margin-top: 100px;
 `;
+
+const Field = styled.div`
+  margin: 10px;
+  margin-left: 0px;
+`;
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -92,27 +97,67 @@ class Profile extends Component {
     if (!this.state.editable) {
       return (
         <Container>
-          ProfileTIME
+          <div
+            style={{
+              background: 'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+              display: 'inline',
+              marginLeft: '10px',
+              fontSize: '2em',
+              marginBottom: '20px'
+            }}
+          >
+            Profile
+          </div>
           <div>
-            <div>Preferred Name: {this.state.preferredName}</div>
-            <div>Pronouns: {this.state.pronouns}</div>
-            <div>First Name: {this.state.firstName}</div>
-            <div>Last Name: {this.state.lastName}</div>
-            <div>email: {this.state.email}</div>
-            <div>role: {this.state.role}</div>
-            <button onClick={this.handleEdit}>EDIT</button>
+            <Field>Preferred Name: {this.state.preferredName}</Field>
+            <Field>Pronouns: {this.state.pronouns}</Field>
+            <Field>First Name: {this.state.firstName}</Field>
+            <Field>Last Name: {this.state.lastName}</Field>
+            <Field>email: {this.state.email}</Field>
+            <Field>role: {this.state.role}</Field>
+            <button
+              style={{
+                color: '#333',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              onClick={this.handleEdit}
+            >
+              EDIT
+            </button>
           </div>
         </Container>
       );
     } else {
       return (
         <Container>
-          <div>edit</div>
+          <div
+            style={{
+              background: 'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+              display: 'inline',
+              marginLeft: '10px',
+              fontSize: '2em',
+              marginBottom: '20px'
+            }}
+          >
+            Profile
+          </div>
           <form onSubmit={this.handleProfileUpdate}>
-            <div>
+            <Field>
               <label htmlFor="preferredName">
                 Preffered Name
                 <input
+                  style={{
+                    border: 'none',
+                    borderBottom: '3px solid #333',
+                    marginLeft: '10px'
+                  }}
                   id="preferredName"
                   type="text"
                   name="preferredName"
@@ -120,11 +165,16 @@ class Profile extends Component {
                   value={this.state.preferredName}
                 />
               </label>
-            </div>
+            </Field>
             <div>
               <label htmlFor="pronouns">
                 Pronouns
                 <input
+                  style={{
+                    border: 'none',
+                    borderBottom: '3px solid #333',
+                    marginLeft: '10px'
+                  }}
                   id="pronouns"
                   type="text"
                   name="pronouns"
@@ -137,6 +187,11 @@ class Profile extends Component {
               <label htmlFor="firstName">
                 First Name
                 <input
+                  style={{
+                    border: 'none',
+                    borderBottom: '3px solid #333',
+                    marginLeft: '10px'
+                  }}
                   id="firstName"
                   type="text"
                   name="firstName"
@@ -149,6 +204,11 @@ class Profile extends Component {
               <label htmlFor="lastName">
                 Last Name
                 <input
+                  style={{
+                    border: 'none',
+                    borderBottom: '3px solid #333',
+                    marginLeft: '10px'
+                  }}
                   id="lastName"
                   type="text"
                   name="lastName"
@@ -157,8 +217,37 @@ class Profile extends Component {
                 />
               </label>
             </div>
-            <button onClick={this.handleEdit}>cancel</button>
-            <input type="submit" value="submit" />
+            <button
+              style={{
+                color: '#333',
+                backgroundColor: '#EE7E80',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              onClick={this.handleEdit}
+            >
+              cancel
+            </button>
+            <input
+              style={{
+                color: '#333',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="update"
+            />
           </form>
         </Container>
       );

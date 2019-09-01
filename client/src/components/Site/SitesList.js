@@ -42,36 +42,111 @@ const SitesList = props => {
       <SiteItem key={site._id}>
         <h1>{site.schoolName}</h1>
         {user.role === 'EXEC' ? (
-          <button onClick={() => props.handleDeleteSite(site._id)}>
+          <button
+            style={{
+              color: '#333',
+              backgroundColor: '#EE7E80',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={() => props.handleDeleteSite(site._id)}
+          >
             DELETE SITE
           </button>
         ) : (
           ''
         )}
         {user.role === 'EXEC' ? (
-          <button onClick={() => props.handleSiteView(site._id)}>
+          <button
+            style={{
+              color: '#333',
+              backgroundColor: '#5CCFB4',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={() => props.handleSiteView(site._id)}
+          >
             VIEW SITE
           </button>
         ) : (
           ''
         )}
         {user.role === 'EXEC' ? (
-          <button onClick={() => props.handleEditSite(site._id)}>
+          <button
+            style={{
+              color: '#333',
+              backgroundColor: '#64CAFB',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={() => props.handleEditSite(site._id)}
+          >
             EDIT SITE
           </button>
         ) : (
           ''
         )}
         {sitePending ? (
-          'PENDING REVIEW'
+          <div
+            style={{
+              color: 'black',
+              backgroundColor: '#E9CDDB',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+          >
+            PENDING REVIEW
+          </div>
         ) : !siteJoined ? (
-          <button onClick={() => props.handleJoinSite(site._id, user._id)}>
+          <button
+            style={{
+              color: 'black',
+              backgroundColor: 'red',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={() => props.handleJoinSite(site._id, user._id)}
+          >
             JOIN SITE
           </button>
-        ) : (
-          <button onClick={() => props.handleSiteView(site._id)}>
+        ) : user.role !== 'EXEC' ? (
+          <button
+            style={{
+              color: 'black',
+              backgroundColor: '#5CCFB4',
+              textDecoration: 'none',
+              border: 'solid #333 3px',
+              borderRadius: '6px',
+              boxShadow: '4px 4px 0px #333',
+              padding: '10px',
+              margin: '10px'
+            }}
+            onClick={() => props.handleSiteView(site._id)}
+          >
             VIEW SITE
           </button>
+        ) : (
+          ''
         )}
       </SiteItem>
     );
