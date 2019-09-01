@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import { getJWT } from '../../utils/utils';
@@ -128,7 +129,18 @@ class CreateLesson extends Component {
       <Container>
         <div>
           <div>
-            <div>CREATE A LESSON ????</div>
+            <div
+              style={{
+                background:
+                  'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+                display: 'inline',
+                marginLeft: '10px',
+                fontSize: '2em',
+                marginBottom: '20px'
+              }}
+            >
+              ฅ^•ﻌ•^ฅ CREATE A LESSON
+            </div>
           </div>
           <LessonContainer onSubmit={this.submit}>
             <div>
@@ -214,14 +226,32 @@ class CreateLesson extends Component {
                   {this.state.siteObj
                     ? this.state.siteObj.siteTimes.map(siteTime => (
                         <option key={siteTime._id} value={siteTime.siteNumber}>
-                          {`${siteTime.siteNumber} ${siteTime.startTime} ${siteTime.day}`}
+                          {`[${siteTime.siteNumber}] ${moment
+                            .tz(siteTime.startTime, 'America/Los_Angeles')
+                            .format('h:mm a')}-${moment
+                            .tz(siteTime.endTime, 'America/Los_Angeles')
+                            .format('h:mm a')}  ${siteTime.day}`}
                         </option>
                       ))
                     : ''}
                 </select>
               </label>
             </div>
-            <input type="submit" value="submit" />
+            <input
+              style={{
+                color: 'black',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="submit"
+            />
           </LessonContainer>
         </div>
       </Container>

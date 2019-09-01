@@ -5,11 +5,23 @@ import styled from 'styled-components';
 import SitesList from './SitesList';
 import { getUser, getJWT } from '../../utils/utils';
 
+const SitesContainer = styled.div`
+  margin-bottom: 50px;
+`;
+
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+`;
+
+const ContainerTitle = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 100px;
 `;
 
 class Sites extends Component {
@@ -128,7 +140,20 @@ class Sites extends Component {
   render() {
     const user = getUser();
     return (
-      <div>
+      <SitesContainer>
+        <ContainerTitle>
+          <div
+            style={{
+              background: 'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+              display: 'inline',
+              marginLeft: '10px',
+              fontSize: '2em',
+              marginBottom: '20px'
+            }}
+          >
+            ฅ^•ﻌ•^ฅ ANova's Sites
+          </div>
+        </ContainerTitle>
         {user.role === 'EXEC' ? (
           <div
             style={{
@@ -168,7 +193,7 @@ class Sites extends Component {
             handleJoinSite={this.handleJoinSite}
           />
         </Container>
-      </div>
+      </SitesContainer>
     );
   }
 }

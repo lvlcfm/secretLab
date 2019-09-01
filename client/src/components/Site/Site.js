@@ -10,8 +10,30 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 100px;
+`;
+
+const SchoolContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const SchoolContainerItems = styled.div`
+  width: 25%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const SchoolName = styled.div`
+  font-size: 2em;
+  margin: 10px;
+`;
+const SchoolItem = styled.div`
+  margin: 10px;
 `;
 
 class Site extends Component {
@@ -27,7 +49,12 @@ class Site extends Component {
     this.state = {
       lessons: [],
       allSiteTimes: [],
-      userSitetimes: []
+      userSitetimes: [],
+      schoolName: '',
+      schoolAddress: '',
+      style: '',
+      level: '',
+      classroom: ''
     };
   }
   async componentDidMount() {
@@ -43,6 +70,7 @@ class Site extends Component {
           }
         }
       );
+
       const resLessons = await axios.get(
         `/api/lessons/site/${this.props.match.params.id}`,
         {
@@ -64,7 +92,14 @@ class Site extends Component {
       this.setState({
         userSiteTimes: resUserSiteTimes.data.siteTimes,
         lessons: resLessons.data,
-        allSiteTimes: resSiteTimes.data.siteTimes
+        allSiteTimes: resSiteTimes.data.siteTimes,
+        schoolName: resSiteTimes.data ? resSiteTimes.data.schoolName : '',
+        schoolAddress: resSiteTimes.data ? resSiteTimes.data.schoolAddress : '',
+        style: resSiteTimes.data ? resSiteTimes.data.style : '',
+        level: resSiteTimes.data ? resSiteTimes.data.level : '',
+        classroom: resSiteTimes.data ? resSiteTimes.data.classroom : '',
+        semester: resSiteTimes.data ? resSiteTimes.data.semester : '',
+        year: resSiteTimes.data ? resSiteTimes.data.year : ''
       });
     } catch (e) {
       console.log(e);
@@ -194,7 +229,6 @@ class Site extends Component {
           }
         }
       );
-      console.log(resSiteTimes.data);
       this.setState({
         userSiteTimes: resUserSiteTimes.data.siteTimes,
         lessons: resLessons.data,
@@ -211,12 +245,36 @@ class Site extends Component {
     const user = getUser();
     return (
       <Container>
+        <SchoolContainer>
+          <SchoolContainerItems>
+            <SchoolName>
+              {this.state.schoolName ? this.state.schoolName : ''}
+            </SchoolName>
+          </SchoolContainerItems>
+          <SchoolContainerItems>
+            <SchoolItem>
+              {this.state.schoolAddress ? this.state.schoolAddress : ''}
+            </SchoolItem>
+          </SchoolContainerItems>
+          <SchoolContainerItems>
+            <SchoolItem>
+              {this.state.style ? this.state.style : ''} Site
+            </SchoolItem>
+          </SchoolContainerItems>
+          <SchoolContainerItems>
+            <SchoolItem>{this.state.level ? this.state.level : ''}</SchoolItem>
+          </SchoolContainerItems>
+          <SchoolContainerItems>
+            <SchoolItem>
+              Room {this.state.classroom ? this.state.classroom : ''}
+            </SchoolItem>
+          </SchoolContainerItems>
+        </SchoolContainer>
+
         <div
           style={{
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: '100px'
+            flexDirection: 'row'
           }}
         >
           <button
@@ -234,6 +292,25 @@ class Site extends Component {
           >
             SITE ROSTER
           </button>
+          {user.role === 'EXEC' || user.role === 'SITE LEADER' ? (
+            <button
+              style={{
+                color: 'black',
+                backgroundColor: '#48D7C6',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px'
+              }}
+              onClick={this.onCreateLesson}
+            >
+              CREATE A LESSON
+            </button>
+          ) : (
+            ''
+          )}
         </div>
         <JoinSiteTimeList
           userSiteTimes={this.state.userSiteTimes}
@@ -241,22 +318,10 @@ class Site extends Component {
           handleJoinSiteTime={this.handleJoinSiteTime}
           handleLeaveSiteTime={this.handleLeaveSitetime}
         />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: '100px'
-          }}
-        >
-          {user.role === 'EXEC' || user.role === 'SITE LEADER' ? (
-            <button onClick={this.onCreateLesson}>CREATE THEEEEE LESSON</button>
-          ) : (
-            ''
-          )}
-        </div>
+
         <LessonList
           lessons={this.state.lessons}
+          userSiteTimes={this.state.userSiteTimes}
           handleLessonView={this.handleLessonView}
           handleDeleteLesson={this.handleDeleteLesson}
           handleEditLesson={this.handleEditLesson}

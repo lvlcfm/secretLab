@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment-timezone';
 import { getUser } from '../../utils/utils';
 
 const SiteTimesContainer = styled.div`
@@ -11,6 +12,7 @@ const SiteTimesContainer = styled.div`
   border: solid #333 3px;
   border-radius: 6px;
   box-shadow: 4px 4px 0px #333;
+  width: 70%;
 `;
 
 const SiteTimeItem = styled.div`
@@ -61,11 +63,19 @@ const JoinSiteTimeList = props => {
           </SiteTimeContent>
           <SiteTimeContent>
             <SiteTimeField>start time:</SiteTimeField>
-            {siteTime.startTime}
+            {siteTime.startTime
+              ? moment
+                  .tz(siteTime.startTime, 'America/Los_Angeles')
+                  .format('h:mm a')
+              : ''}
           </SiteTimeContent>
           <SiteTimeContent>
             <SiteTimeField>end time:</SiteTimeField>
-            {siteTime.endTime}
+            {siteTime.endTime
+              ? moment
+                  .tz(siteTime.endTime, 'America/Los_Angeles')
+                  .format('h:mm a')
+              : ''}
           </SiteTimeContent>
           <SiteTimeContent>
             {joinedSite ? (

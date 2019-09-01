@@ -277,7 +277,21 @@ class EditLesson extends Component {
                 </select>
               </label>
             </div>
-            <input type="submit" value="submit" />
+            <input
+              style={{
+                color: '#333',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="submit"
+            />
           </LessonContainer>
         </div>
       </Container>

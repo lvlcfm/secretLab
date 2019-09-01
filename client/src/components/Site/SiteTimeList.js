@@ -60,7 +60,20 @@ const SiteTimeList = props => {
             {moment.tz(site.endTime, 'America/Los_Angeles').format('h:mm a')}
           </SiteTimeContent>
           <SiteTimeContent>
-            <button onClick={() => props.handleDeleteSiteTime(site.siteNumber)}>
+            <button
+              style={{
+                color: '#333',
+                backgroundColor: '#EE7E80',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              onClick={() => props.handleDeleteSiteTime(site.siteNumber)}
+            >
               DELETE
             </button>
           </SiteTimeContent>

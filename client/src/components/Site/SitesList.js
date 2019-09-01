@@ -20,9 +20,16 @@ const SiteItem = styled.div`
   box-shadow: 4px 4px 0px #333;
 `;
 
+const SiteDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+`;
+
 const SitesList = props => {
   const user = getUser();
   const siteTimes = props.sites.map(site => {
+    console.log(site);
     var sitePending = false;
     var siteJoined = false;
     for (let index = 0; index < props.userSiteRequests.length; index++) {
@@ -40,7 +47,15 @@ const SitesList = props => {
 
     return (
       <SiteItem key={site._id}>
-        <h1>{site.schoolName}</h1>
+        <SiteDetailsContainer>
+          <h1>{site.schoolName}</h1>
+          <div>{site.level}</div>
+          <div>
+            {site.semester} {site.year}
+          </div>
+          <div>{site.style} site</div>
+        </SiteDetailsContainer>
+
         {user.role === 'EXEC' ? (
           <button
             style={{
@@ -117,7 +132,7 @@ const SitesList = props => {
           <button
             style={{
               color: 'black',
-              backgroundColor: 'red',
+              backgroundColor: '#E9CDDB',
               textDecoration: 'none',
               border: 'solid #333 3px',
               borderRadius: '6px',

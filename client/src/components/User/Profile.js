@@ -106,7 +106,7 @@ class Profile extends Component {
               marginBottom: '20px'
             }}
           >
-            Profile
+            Profile (❍ᴥ❍ʋ)
           </div>
           <div>
             <Field>Preferred Name: {this.state.preferredName}</Field>
@@ -146,7 +146,7 @@ class Profile extends Component {
               marginBottom: '20px'
             }}
           >
-            Profile
+            Profile (❍ᴥ❍ʋ)
           </div>
           <form onSubmit={this.handleProfileUpdate}>
             <Field>

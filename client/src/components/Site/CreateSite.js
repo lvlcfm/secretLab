@@ -9,8 +9,8 @@ import { getJWT } from '../../utils/utils';
 const Container = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 50px;
 `;
 const ItemsContainer = styled.div`
@@ -145,7 +145,17 @@ class CreateSite extends Component {
   render() {
     return (
       <Container>
-        <div>CREATE A SITE</div>
+        <div
+          style={{
+            background: 'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+            display: 'inline',
+            marginLeft: '10px',
+            fontSize: '2em',
+            marginBottom: '20px'
+          }}
+        >
+          CREATE A SITE
+        </div>
         <ItemsContainer>
           <div>
             <div>SITE TIME SLOTS</div>
@@ -156,7 +166,6 @@ class CreateSite extends Component {
           />
           <AddSiteContainer>
             <div>
-              ADD A TIME SLOT
               <div>
                 Start Time:
                 <DatePicker
@@ -208,7 +217,22 @@ class CreateSite extends Component {
                 />
               </label>
             </div>
-            <button onClick={this.handleAddSiteTime}>ADD TIME SLOT</button>
+            <button
+              style={{
+                color: 'black',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              onClick={this.handleAddSiteTime}
+            >
+              ADD TIME SLOT
+            </button>
           </AddSiteContainer>
           <SchoolInfoContainer onSubmit={this.submit}>
             <div>
@@ -320,7 +344,21 @@ class CreateSite extends Component {
               </label>
             </div>
 
-            <input type="submit" value="CREATE SITE" />
+            <input
+              style={{
+                color: 'black',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="CREATE SITE"
+            />
           </SchoolInfoContainer>
         </ItemsContainer>
       </Container>

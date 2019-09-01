@@ -268,7 +268,22 @@ class EditSite extends Component {
                 />
               </label>
             </div>
-            <button onClick={this.handleAddSiteTime}>ADD TIME SLOT</button>
+            <button
+              style={{
+                color: '#333',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              onClick={this.handleAddSiteTime}
+            >
+              ADD TIME SLOT
+            </button>
           </AddSiteContainer>
           <SchoolInfoContainer onSubmit={this.submit}>
             <div>
@@ -380,7 +395,21 @@ class EditSite extends Component {
               </label>
             </div>
 
-            <input type="submit" value="UPDATE SITE" />
+            <input
+              style={{
+                color: '#333',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="UPDATE SITE"
+            />
           </SchoolInfoContainer>
         </ItemsContainer>
       </Container>

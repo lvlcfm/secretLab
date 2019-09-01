@@ -9,8 +9,9 @@ import { getUser, getJWT } from '../../utils/utils';
 const Container = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
 `;
 
 class UserSites extends Component {
@@ -100,6 +101,20 @@ class UserSites extends Component {
     } else {
       return (
         <Container>
+          <div>
+            <div
+              style={{
+                background:
+                  'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+                display: 'inline',
+                marginLeft: '10px',
+                fontSize: '2em',
+                marginBottom: '20px'
+              }}
+            >
+              Your Sites ₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡
+            </div>
+          </div>
           <UserSitesList
             userSites={this.state.userSites}
             handleSiteView={this.handleSiteView}

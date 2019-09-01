@@ -15,10 +15,26 @@ const Container = styled.div`
 `;
 
 const LessonContainer = styled.div`
-  border-left: solid #333 5px;
   margin-right: 24px;
   margin-top: 50px;
   padding-left: 10px;
+  margin-bottom: 20px;
+`;
+
+const LessonSummary = styled.div`
+  border-left: solid #333 5px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  padding: 10px;
+`;
+
+const LessonOverview = styled.div`
+  margin-top: 50px;
+  margin-bottom: 20px;
+`;
+
+const LessonExitTicket = styled.div`
+  margin-top: 50px;
   margin-bottom: 20px;
 `;
 
@@ -33,7 +49,8 @@ class Lesson extends Component {
       week: '',
       siteTime: '',
       exitTicket: '',
-      siteId: ''
+      siteId: '',
+      day: ''
     };
   }
 
@@ -48,6 +65,7 @@ class Lesson extends Component {
           }
         }
       );
+      console.log(resLesson.data);
       this.setState({
         title: resLesson.data.title ? resLesson.data.title : '',
         summary: resLesson.data.summary ? resLesson.data.summary : '',
@@ -60,7 +78,8 @@ class Lesson extends Component {
           : '',
         endTime: resLesson.data.siteTime_id
           ? resLesson.data.siteTime_id.endTime
-          : ''
+          : '',
+        day: resLesson.data.siteTime_id ? resLesson.data.siteTime_id.day : ''
       });
     } catch (e) {
       console.log(e);
@@ -68,50 +87,60 @@ class Lesson extends Component {
   }
 
   render() {
-    const momentLikeThis = moment
-      .tz(this.state.startTime, 'America/Los_Angeles')
-      .format('h:mm a');
-    console.log(momentLikeThis);
+    console.log(this.state.media);
     return (
       <Container>
         <div>
-          <div>
-            <div>Lesson of the Day</div>
-          </div>
-          <LessonContainer onSubmit={{}}>
+          <LessonContainer>
+            <h1>{this.state.title ? this.state.title : ''}</h1>
+            <div>Week #{this.state.week ? this.state.week : ''}</div>
+            <div>{this.state.day ? this.state.day : ''}</div>
+
             <div>
-              Title:
-              {this.state.title ? this.state.title : ''}
-            </div>
-            <div>
-              Summary
-              {this.state.summary ? this.state.summary : ''}
-            </div>
-            <div>
-              content
-              {this.state.content ? this.state.content : ''}
-            </div>
-            <div>Media Content {this.state.media ? this.state.media : ''}</div>
-            <div>Week: {this.state.week ? this.state.week : ''}</div>
-            <div>
-              ExitTicket: {this.state.exitTicket ? this.state.exitTicket : ''}
-            </div>
-            <div>
-              Start Time:{' '}
               {this.state.startTime
                 ? moment
                     .tz(this.state.startTime, 'America/Los_Angeles')
                     .format('h:mm a')
-                : ''}
-            </div>
-            <div>
-              End Time:{' '}
+                : ''}{' '}
+              -{' '}
               {this.state.endTime
                 ? moment
                     .tz(this.state.endTime, 'America/Los_Angeles')
                     .format('h:mm a')
                 : ''}
             </div>
+            {this.state.media !== '' ? (
+              <a href={this.state.media}>Slides</a>
+            ) : (
+              ''
+            )}
+            <LessonSummary>
+              <div>{this.state.summary ? this.state.summary : ''}</div>
+            </LessonSummary>
+
+            <LessonOverview>
+              <div
+                style={{
+                  fontSize: '2em'
+                }}
+              >
+                Overview
+              </div>
+              {this.state.content ? this.state.content : ''}
+            </LessonOverview>
+
+            <LessonExitTicket>
+              <div
+                style={{
+                  fontSize: '1.5em'
+                }}
+              >
+                Exit Ticket
+              </div>
+              <a href={this.state.exitTicket ? this.state.exitTicket : ''}>
+                AirTable Link
+              </a>
+            </LessonExitTicket>
           </LessonContainer>
         </div>
       </Container>
