@@ -8,7 +8,7 @@ const routes = require('./routes/routes');
 const morgan = require('morgan');
 
 mongoose.Promise = global.Promise;
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
   mongoose.connect(
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWD}@${process.env.MONGO_ENDPOINT}`,
     { useNewUrlParser: true }
