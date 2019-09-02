@@ -26,6 +26,17 @@ const LessonDetailsContainer = styled.div`
   margin: 10px;
 `;
 
+const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  width: 200px;
+  border: solid #333 3px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0px #333;
+  padding: 20px;
+`;
+
 const LessonList = props => {
   const user = getUser();
   console.log(props.userSiteTimes);
@@ -119,7 +130,16 @@ const LessonList = props => {
       </ListContainer>
     );
   } else {
-    return <div>currently no lessons</div>;
+    return (
+      <EmptyState>
+        <h1 style={{ color: '#ee7e80' }}>₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡</h1>
+        <h3>OOPS!</h3>
+        <p>
+          Your site leader is hard at work creating lesson plans! New content
+          will be out soon! <h5>Thank you for your patience~</h5>
+        </p>
+      </EmptyState>
+    );
   }
 };
 

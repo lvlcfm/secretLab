@@ -16,14 +16,38 @@ const LessonContainer = styled.form`
   padding-left: 10px;
   margin-bottom: 20px;
 `;
+
+const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  width: 200px;
+  border: solid #333 3px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0px #333;
+  padding: 20px;
+`;
 const Onboard = props => {
   if (props.userRole === 'GUEST' && props.userRoleRequests.length === 0) {
     return (
       <Container>
         <div>
+          <div>
+            <div
+              style={{
+                background:
+                  'linear-gradient(180deg,transparent 65%,#5dceb3 65%)',
+                display: 'inline',
+                marginLeft: '10px',
+                fontSize: '2em',
+                marginBottom: '20px'
+              }}
+            >
+              ฅ^•ﻌ•^ฅ Welcome to Secret Labs!
+            </div>
+          </div>
           <LessonContainer onSubmit={props.handleRoleRequestSubmit}>
             <div>
-              <div>Hello! Welcome to ANova Labs!</div>
               <div>
                 Let's get you onboarded by first having you request your role
               </div>
@@ -41,17 +65,35 @@ const Onboard = props => {
                 </select>
               </label>
             </div>
-            <input type="submit" value="submit" />
+            <input
+              style={{
+                color: 'black',
+                backgroundColor: '#5CCFB4',
+                textDecoration: 'none',
+                border: 'solid #333 3px',
+                borderRadius: '6px',
+                boxShadow: '4px 4px 0px #333',
+                padding: '10px',
+                margin: '10px',
+                marginLeft: '0px'
+              }}
+              type="submit"
+              value="submit"
+            />
           </LessonContainer>
         </div>
       </Container>
     );
   } else if (props.userRole === 'GUEST' && props.userRoleRequests.length > 0) {
     return (
-      <div>
-        HELLO! Thank you for submitting your request! The ANova Labs Team will
-        be reviewing your role request!
-      </div>
+      <EmptyState>
+        <h1 style={{ color: '#ee7e80' }}>₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡</h1>
+        <h3>HELLO!</h3>
+        <p>
+          Thank you for submitting your request! The Secret Labs Team will be
+          reviewing your role request!
+        </p>
+      </EmptyState>
     );
   }
 };

@@ -26,6 +26,16 @@ const SiteDetailsContainer = styled.div`
   margin: 10px;
 `;
 
+const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  width: 200px;
+  border: solid #333 3px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0px #333;
+  padding: 20px;
+`;
 const SitesList = props => {
   const user = getUser();
   const siteTimes = props.sites.map(site => {
@@ -166,7 +176,22 @@ const SitesList = props => {
       </SiteItem>
     );
   });
-  return <ListContainer>{siteTimes}</ListContainer>;
+  return (
+    <ListContainer>
+      {siteTimes.length === 0 ? (
+        <EmptyState>
+          <h1 style={{ color: '#ee7e80' }}>₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡</h1>
+          <h3>HELLO AGAIN!</h3>
+          <p>
+            As soon as we finish reviewing your role request you will be able to
+            start joining sites! <h5>Thank you for your patience~</h5>
+          </p>
+        </EmptyState>
+      ) : (
+        siteTimes
+      )}
+    </ListContainer>
+  );
 };
 
 export default SitesList;

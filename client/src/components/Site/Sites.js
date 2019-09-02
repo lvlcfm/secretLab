@@ -151,7 +151,7 @@ class Sites extends Component {
               marginBottom: '20px'
             }}
           >
-            ฅ^•ﻌ•^ฅ ANova's Sites
+            ฅ^•ﻌ•^ฅ Secret Lab's Sites
           </div>
         </ContainerTitle>
         {user.role === 'EXEC' ? (
