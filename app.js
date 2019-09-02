@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const routes = require('./routes/routes');
 const morgan = require('morgan');
 
@@ -32,6 +33,10 @@ routes(app);
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(422).send({ error: err.message });
+});
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 module.exports = app;
