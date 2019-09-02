@@ -178,7 +178,7 @@ const SitesList = props => {
   });
   return (
     <ListContainer>
-      {siteTimes.length === 0 ? (
+      {siteTimes.length === 0 || user.role === 'GUEST' ? (
         <EmptyState>
           <h1 style={{ color: '#ee7e80' }}>₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡</h1>
           <h3>HELLO AGAIN!</h3>
