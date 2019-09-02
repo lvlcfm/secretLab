@@ -61,7 +61,7 @@ class Signin extends Component {
             alt="ANova Logo"
           ></img>
           <Title>
-            <div>ANova Labs </div>
+            <div>Secret Labs </div>
           </Title>
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
