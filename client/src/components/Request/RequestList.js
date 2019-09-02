@@ -44,9 +44,7 @@ const RequestDetail = styled.div`
 
 const RequestList = props => {
   const requestItems = props.requests.map(request => {
-    console.log(request.status);
     if (request.status === 'PENDING' && request.requestType === 'ROLE') {
-      console.log(request);
       return (
         <RequestItem key={request._id}>
           <RequestDetailsContainer>
@@ -71,7 +69,7 @@ const RequestList = props => {
             <RequestDetailContainer>
               <RequestDetail>REQUESTING THE ROLE OF:</RequestDetail>
               <RequestDetail>
-                {request.requester ? request.requester.role : ''}
+                {request.requester ? request.roleRequest : ''}
               </RequestDetail>
             </RequestDetailContainer>
           </RequestDetailsContainer>

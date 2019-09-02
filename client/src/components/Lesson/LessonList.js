@@ -35,6 +35,8 @@ const EmptyState = styled.div`
   border-radius: 6px;
   box-shadow: 4px 4px 0px #333;
   padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 const LessonList = props => {
@@ -49,10 +51,7 @@ const LessonList = props => {
       for (let index = 0; index < props.userSiteTimes.length; index++) {
         const userSiteTimeEl = props.userSiteTimes[index];
         if (userSiteTimeEl._id === lesson.siteTime_id) {
-          console.log(userSiteTimeEl._id);
-          console.log(lesson.siteTime_id);
           showLesson = true;
-          console.log('ITS TRUE!');
         }
       }
       if (showLesson) {
