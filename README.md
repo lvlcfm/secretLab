@@ -23,9 +23,9 @@ https://github.com/ANovaBerkeley/anovalabs
 
 ## 💻 How To Run Locally
 - If you are running in an OSX environment you can run the following commands
-- Go inside of /client folder and run `npm run start`
+- Go inside of /client folder and run `npm install` then `npm run start`
 - Open a new tab in your terminal
-- Then go into the root folder and run `npm run dev`
+- Then go into the root folder and run `npm install` then `npm run dev`
 - Go to your browser at http://localhost:3000/
 - You should now be able to log-in/sign-up for an account
 - NOTE: If you are running the application for the first time -- you will need to go into the database and change your role to `EXEC` since the database is not seeded with a default admin -- this is important to note because if you don't have the `EXEC` role you will not be able to approve or deny any requests (including for yourself)
