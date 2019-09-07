@@ -1,4 +1,7 @@
 # 🧤Secret Labs
+![alt text](./secretLabs.png)
+
+
 This application is an open sourced edTech platform
 
 primarily serving as a refactor for ANova Labs and to support the mission statement of ANova
